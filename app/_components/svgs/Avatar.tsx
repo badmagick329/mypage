@@ -8,15 +8,18 @@ const blinkJitter = 1500;
 export function Avatar({
   size = 100,
   className = "",
+  isHovering = false,
 }: {
   size?: number;
   className?: string;
+  isHovering: boolean;
 }) {
   const yOffset = 175;
   const xOffset = 130;
   const [isBlinking, setIsBlinking] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isVisible, setIsVisible] = useState(false);
 
   const calculatePupilPos = (eyeX: number, eyeY: number) => {
     const dx = mousePos.x - xOffset;
@@ -69,6 +72,10 @@ export function Avatar({
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
+  useEffect(() => {
+    if (isHovering && !isVisible) setIsVisible(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isHovering]);
 
   const leftPupilPos = calculatePupilPos(xOffset - 30, yOffset - 10);
   const rightPupilPos = calculatePupilPos(xOffset + 30, yOffset - 10);
@@ -86,6 +93,14 @@ export function Avatar({
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transition:
+          "opacity 250ms ease-in-out, translate 250ms ease-in-out, transform 250ms ease-in-out",
+        translate: isVisible ? "0px 0px" : "5px 10px",
+        transform: isVisible ? "scale(1)" : "scale(0.4)",
+      }}
+      onMouseEnter={() => setIsVisible(false)}
     >
       {/* face */}
       <ellipse
