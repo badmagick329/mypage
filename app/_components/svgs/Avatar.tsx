@@ -23,7 +23,7 @@ export function Avatar({
     const dy = mousePos.y - yOffset;
     const mouseDistance = Math.sqrt(dx * dx + dy * dy);
 
-    const maxDistance = 800;
+    const maxDistance = 2000;
 
     if (mouseDistance > maxDistance) {
       return { x: eyeX, y: eyeY };
@@ -79,7 +79,7 @@ export function Avatar({
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
-      viewBox="0 0 300 300"
+      viewBox="0 0 400 400"
       fill="none"
       stroke="none"
       strokeWidth="1"
@@ -221,7 +221,7 @@ export function Avatar({
           key={i}
           cx={star.x}
           cy={star.y}
-          r="2"
+          r="4"
           className="animate-pulse text-blue-300"
           fill="currentColor"
         />
@@ -229,22 +229,22 @@ export function Avatar({
       {/* beard */}
       <path
         d={`
-        M ${xOffset - 50} ${yOffset + 50}
-        Q ${xOffset - 65} ${yOffset + 75} ${xOffset - 35} ${yOffset + 105}
-        Q ${xOffset} ${yOffset + 135} ${xOffset + 35} ${yOffset + 105}
-        Q ${xOffset + 65} ${yOffset + 75} ${xOffset + 50} ${yOffset + 50}
-        Q ${xOffset} ${yOffset + 70} ${xOffset - 50} ${yOffset + 50}
-        Z
-      `}
-        className="text-gray-200"
+          M ${xOffset - 50} ${yOffset + 50}
+          Q ${xOffset - 65} ${yOffset + 75} ${xOffset - 35} ${yOffset + 105}
+          Q ${xOffset} ${yOffset + 155} ${xOffset + 35} ${yOffset + 105}
+          Q ${xOffset + 65} ${yOffset + 75} ${xOffset + 50} ${yOffset + 50}
+          Q ${xOffset} ${yOffset + 70} ${xOffset - 50} ${yOffset + 50}
+          Z
+        `}
+        className="text-gray-300"
         fill="currentColor"
       />
       {/* mouth */}
       <path
         d={`
-    M ${xOffset - 10} ${yOffset + 70}
-    Q ${xOffset} ${yOffset + 80} ${xOffset + 10} ${yOffset + 70}
-  `}
+          M ${xOffset - 10} ${yOffset + 70}
+          Q ${xOffset} ${yOffset + 80} ${xOffset + 10} ${yOffset + 70}
+        `}
         stroke="currentColor"
         strokeWidth="2"
         className="text-gray-800"
