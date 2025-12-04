@@ -4,6 +4,7 @@ import { ProjectData } from "@/app/projects/_components/projects-data";
 import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import ProjectMediaDisplay from "@/app/projects/_components/ProjectMediaDisplay";
 
 const iconSize = "xs:w-4 xs:h-4 mt-1 h-3 w-3";
 
@@ -11,8 +12,8 @@ export default function ProjectCard({
   name,
   githubProjectName,
   homePage,
+  mediaList,
   tagline,
-  shortDescription,
   description,
   why,
   tech,
@@ -31,7 +32,6 @@ export default function ProjectCard({
           name={name}
           homePage={homePage}
           tagline={tagline}
-          shortDescription={shortDescription}
           isMinimized={isMinimized}
         />
         {isMinimized ? (
@@ -42,6 +42,7 @@ export default function ProjectCard({
       </section>
       {!isMinimized && (
         <AdditionalDetail
+          mediaList={mediaList}
           description={description}
           why={why}
           tech={tech}
@@ -56,13 +57,8 @@ function Heading({
   name,
   homePage,
   tagline,
-  shortDescription,
   isMinimized,
-}: {
-  name: string;
-  homePage?: string;
-  tagline: string;
-  shortDescription: string;
+}: Pick<ProjectData, "name" | "homePage" | "mediaList" | "tagline"> & {
   isMinimized: boolean;
 }) {
   if (!homePage) {
@@ -95,13 +91,12 @@ function AdditionalDetail({
   description,
   why,
   tech,
+  mediaList,
   githubProjectName,
-}: {
-  description: string;
-  why: string;
-  tech: string[];
-  githubProjectName: string;
-}) {
+}: Pick<
+  ProjectData,
+  "description" | "why" | "tech" | "githubProjectName" | "mediaList"
+>) {
   return (
     <>
       <div className="flex flex-col gap-8 px-2">
@@ -112,6 +107,11 @@ function AdditionalDetail({
           <span className="xs:text-lg text-base font-bold">Why?</span>
           <span className="xs:text-base text-sm">{why}</span>
         </section>
+        {mediaList && (
+          <section>
+            <ProjectMediaDisplay mediaList={mediaList} />
+          </section>
+        )}
       </div>
       <footer className="flex grow flex-col justify-end gap-2 px-2 py-4">
         <section className="flex flex-col gap-1">

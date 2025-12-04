@@ -10,12 +10,13 @@ export default function Projects() {
           {projectsData.map((p) => (
             <ProjectCard
               key={p.name}
-              homePage={p?.homePage}
               name={p.name}
               githubProjectName={p.githubProjectName}
-              description={p.description}
+              homePage={p?.homePage}
               tagline={p.tagline}
               shortDescription={p.shortDescription}
+              mediaList={p?.mediaList}
+              description={p.description}
               why={p.why}
               tech={p.tech}
             />

@@ -2,12 +2,15 @@ export type ProjectData = {
   name: string;
   githubProjectName: string;
   homePage?: string;
+  mediaList?: ProjectMedia[];
   tagline: string;
   shortDescription: string;
   description: string;
   why: string;
   tech: string[];
 };
+
+export type ProjectMedia = { url: string; text: string; type: string };
 
 export const projectsData = [
   {
@@ -100,6 +103,14 @@ export const projectsData = [
     name: "Tetris in the Terminal",
     githubProjectName: "tetris",
     description: "A tetris clone in the terminal, written in Rust 🦀",
+    mediaList: [
+      {
+        url: "/videos/clitetris.mp4",
+        text: "some text here explaining things in the video",
+        type: "video/mp4",
+      },
+    ],
+
     tagline: "Classic Tetris, reimagined for the terminal",
     shortDescription:
       "A fully playable Tetris clone built in Rust for the command line.",
@@ -166,6 +177,7 @@ export const projectsData = [
     description:
       "A 3D browser-based game where you control a geometric shape and blast enemies off the platform.",
 
+    homePage: "https://badmagick.itch.io/cublaster",
     tagline: "A 3D browser game built with Three.js",
     shortDescription:
       "A browser-based 3D game where you blast enemies off a platform, built for a game jam.",
