@@ -6,16 +6,16 @@ export default function WelcomeMessage() {
   const [isHovering, setIsHovering] = useState(false);
 
   return (
-    <article className="bg-background-light shadow-card relative flex max-w-md flex-col rounded-md">
+    <article className="bg-background-light shadow-welcome-card relative flex max-w-md flex-col rounded-md">
       <Avatar
         size={84}
         className="absolute -top-9 -right-4 -rotate-6"
         isHovering={isHovering}
       />
-      <section className="bg-background-lighter/60 py-2 text-center">
+      <section className="bg-welcome-card-header shadow-welcome-card flex flex-col items-center rounded-t-md py-2 text-center">
         <h3 className="text-foreground-strong text-3xl font-black">HELLO</h3>
         <div
-          className="flex justify-center gap-2 hover:cursor-pointer"
+          className="flex w-fit justify-center gap-2 hover:cursor-pointer"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
