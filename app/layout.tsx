@@ -29,8 +29,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased transition-all`}
       >
-        <main className="flex flex-col min-h-screen items-center font-sans">
-          <ThemeProvider>
+        <main className="flex min-h-screen flex-col items-center font-sans">
+          <ThemeProvider attribute="class">
             <Navbar />
             {children}
           </ThemeProvider>
