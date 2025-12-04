@@ -1,36 +1,125 @@
+"use client";
+
 import { ProjectData } from "@/app/projects/_components/projects-data";
-import { ExternalLink } from "lucide-react";
+import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+
+const iconSize = "xs:w-4 xs:h-4 mt-1 h-3 w-3";
 
 export default function ProjectCard({
   name,
   githubProjectName,
   homePage,
+  tagline,
+  shortDescription,
   description,
   why,
   tech,
 }: ProjectData) {
+  const [isMinimized, setIsMinimized] = useState(true);
+
   return (
-    <article className="bg-background-light shadow-card @container flex w-full flex-col items-start gap-4 overflow-hidden rounded-md">
-      <section className="bg-background-lighter w-full py-4 text-center">
-        <Heading name={name} homePage={homePage} />
+    <article
+      className={`bg-background-light shadow-card group -mt-1 flex w-full flex-col items-start gap-4 rounded-t-md first:mt-0 last:rounded-md sm:max-w-[80%] lg:max-w-[60%]`}
+    >
+      <section
+        className={`bg-background-lighter/60 relative flex w-full justify-between rounded-t-md px-2 py-6 select-none group-last:rounded-md hover:cursor-pointer`}
+        onClick={() => setIsMinimized((p) => !p)}
+      >
+        <Heading
+          name={name}
+          homePage={homePage}
+          tagline={tagline}
+          shortDescription={shortDescription}
+          isMinimized={isMinimized}
+        />
+        {isMinimized ? (
+          <ChevronDown className={iconSize} />
+        ) : (
+          <ChevronUp className={iconSize} />
+        )}
       </section>
+      {!isMinimized && (
+        <AdditionalDetail
+          description={description}
+          why={why}
+          tech={tech}
+          githubProjectName={githubProjectName}
+        />
+      )}
+    </article>
+  );
+}
+
+function Heading({
+  name,
+  homePage,
+  tagline,
+  shortDescription,
+  isMinimized,
+}: {
+  name: string;
+  homePage?: string;
+  tagline: string;
+  shortDescription: string;
+  isMinimized: boolean;
+}) {
+  if (!homePage) {
+    return (
+      <div className="flex flex-col gap-2">
+        <h3 className="xs:text-xl text-base font-semibold">{name}</h3>
+        {isMinimized && (
+          <span className="text-foreground-muted">{tagline}</span>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-2">
+      <h3 className="text-foreground-strong xs:text-xl w-fit text-base font-semibold">
+        <Link href={homePage} target="_blank" className="hover:underline">
+          <span className="flex gap-2">
+            {name}
+            <ExternalLink className={iconSize} />
+          </span>
+        </Link>
+      </h3>
+      {isMinimized && <span className="text-foreground-muted">{tagline}</span>}
+    </div>
+  );
+}
+
+function AdditionalDetail({
+  description,
+  why,
+  tech,
+  githubProjectName,
+}: {
+  description: string;
+  why: string;
+  tech: string[];
+  githubProjectName: string;
+}) {
+  return (
+    <>
       <div className="flex flex-col gap-8 px-2">
-        <p className="text-foreground-muted text-sm @xs:text-base">
+        <p className="text-foreground-muted xs:text-base text-sm">
           {description}
         </p>
         <section className="flex flex-col gap-1">
-          <span className="text-base font-bold @xs:text-lg">Why?</span>
-          <span className="text-sm @xs:text-base">{why}</span>
+          <span className="xs:text-lg text-base font-bold">Why?</span>
+          <span className="xs:text-base text-sm">{why}</span>
         </section>
       </div>
       <footer className="flex grow flex-col justify-end gap-2 px-2 py-4">
         <section className="flex flex-col gap-1">
-          <h3 className="text-base font-semibold @xs:text-xl">Tech</h3>
+          <h3 className="xs:text-xl text-base font-semibold">Tech</h3>
           <ul className="flex flex-wrap gap-2">
             {tech.map((t) => (
               <li
-                className="bg-background-lighter text-foreground-strong rounded-md px-2 py-1 text-xs @xs:text-sm"
+                className="bg-background-lighter text-foreground-strong xs:text-sm rounded-md px-2 py-1 text-xs"
                 key={t}
               >
                 {t}
@@ -41,31 +130,14 @@ export default function ProjectCard({
         <Link
           href={`https://github.com/badmagick329/${githubProjectName}`}
           target="_blank"
-          className="text-foreground-muted text-xs hover:underline @xs:text-sm"
+          className="text-foreground-muted xs:text-sm text-xs hover:underline"
         >
           <span className="flex gap-2">
             {`https://github.com/badmagick329/${githubProjectName}`}
-            <ExternalLink className="xs:w-2.5 mt-1 h-2 w-2 @xs:h-2.5" />
+            <ExternalLink className="xs:w-2.5 xs:h-2.5 mt-1 h-2 w-2" />
           </span>
         </Link>
       </footer>
-    </article>
-  );
-}
-
-function Heading({ name, homePage }: { name: string; homePage?: string }) {
-  if (!homePage) {
-    return <h3 className="text-base font-semibold @xs:text-xl">{name}</h3>;
-  }
-
-  return (
-    <h3 className="text-foreground-strong text-base font-semibold @xs:text-xl">
-      <Link href={homePage} target="_blank" className="hover:underline">
-        <span className="flex justify-center gap-2">
-          {name}
-          <ExternalLink className="xs:w-4 mt-1 h-2.5 w-2.5 @xs:h-4" />
-        </span>
-      </Link>
-    </h3>
+    </>
   );
 }
