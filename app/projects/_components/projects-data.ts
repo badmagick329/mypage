@@ -17,11 +17,11 @@ export const projectsData = [
     name: "Remote Video Encoding Service",
     githubProjectName: "ffmpeg_service",
     description:
-      "Offload a batch of ffmpeg commands to your VPS/homelab. Files are sent to the server, processed, and copied to their respective destinations.",
+      "Offload batches of ffmpeg commands to your homelab or VPS instances. Files are sent to the servers, processed, and copied back to your machine.",
     tagline: "Offload heavy video encoding to your server",
     shortDescription:
       "Batch process FFmpeg commands on a remote server, freeing your local machine from slow AV1 encodes.",
-    why: "AV1 encoding can be slow. I was re-encoding a lot of videos and had been leaving my PC running overnight for these.",
+    why: "AV1 video encoding can be slow. Workloads can keep your computer busy for hours and you can't do much while you're waiting for this process. This lets you send your workload to one or more remote machines where they will be processed in parallel, and the results will be sent back to your machine.",
     tech: ["React", "Typescript", "Docker", "FFmpeg"],
   },
   {
@@ -29,11 +29,11 @@ export const projectsData = [
     githubProjectName: "mgck",
     homePage: "https://mgck.ink/gfys",
     description:
-      "Browse High Quality Gfys of the girl group Red Velvet, migrated from Gfycat.",
+      "A webpage to browse high-quality GIFs of the K-pop girl group Red Velvet, migrated from Gfycat.",
     tagline: "Preserving content from Gfycat's shutdown",
     shortDescription:
       "A searchable archive of high-quality Red Velvet clips rescued before Gfycat's 2023 shutdown.",
-    why: "On September 1 2023, Gfycat was shutdown. People had uploaded several clips to this platform that were going to be lost when it went down.",
+    why: "On September 1 2023, Gfycat was shut down, which led to people losing a lot of clips they had created and stored on the site. I built a webpage in a short amount of time to store and display some of those GIFs, so they wouldn't be lost forever.",
     tech: [
       "Next.js",
       "React",
@@ -53,7 +53,7 @@ export const projectsData = [
     tagline: "Create Discord emotes without the size limit guesswork",
     shortDescription:
       "Turn video clips into Discord-ready emotes and stickers, automatically optimized to meet file size limits.",
-    why: "When creating your own stickers or emotes for discord you often have to play a 'guess the frame size' game while you recreate the gif over and over to get it just under discord's size limit. This can be very tedious.",
+    why: "When creating your own stickers or emotes for Discord, you often have to play a 'guess the frame size' game. This results in recreating the emote and sticker multiple times to get the right size. With this app, you can automate this tedious process.",
     tech: ["Next.js", "React", "Typescript", "FFmpeg", "Docker"],
   },
   {
@@ -65,7 +65,7 @@ export const projectsData = [
     tagline: "Never miss a Kpop comeback",
     shortDescription:
       "Track upcoming releases and discover past comebacks from your favorite Kpop groups.",
-    why: "It can be easy to miss a release by a group you like, or keep up with what's coming up ahead unless you are actively keeping up with the news.",
+    why: "A lot of things happen in the world of K-pop, and it's very easy to miss out on a release of your favourite artist. I built a website that gathers this data for you and displays the comebacks by group and date. The interface makes it easy to search for upcoming or past releases by date, title or artist name. Releases also include a link to the YouTube to view the Music Video.",
     tech: [
       "Next.js",
       "React",
@@ -84,7 +84,7 @@ export const projectsData = [
     tagline: "Pantry tracking with receipt parsing and an AI chatbot",
     shortDescription:
       "Manage household food inventory with automated receipt parsing and a conversational Discord assistant.",
-    why: "I'd often forget the expiry dates for foods resulting in food waste. My flatmate is also unable to physically check what food items are available at home. This lets her look that up through the app.",
+    why: "Keeping track of everything in your pantry can be a challenge, especially when it comes to use-by dates. This app makes it easy to view the content of your fridge, freezer and pantry, no matter where you are. Best-by dates help you reduce food waste, and the displayed quantities ensure you only buy the amount you need during your weekly shop. You can also input your Ocado PDF-receipts for home deliveries to avoid having to manually enter each item. An AI chatbot is also available through discord which makes it easier to query the app and even remove items as you're cooking.",
     tech: ["Next.js", "React", "Typescript", "Gemini", "Docker"],
   },
   {
@@ -96,7 +96,7 @@ export const projectsData = [
     tagline: "A website for a copywriter",
     shortDescription:
       "A professional website with an integrated blog, built for a freelance copywriter.",
-    why: "A copywriter wanted a website built.",
+    why: "A copywriter wanted me to create a website that also includes a blog. A modern interface with easy-to-use customisation options that allow the owner to update and monitor the website and blog traffic.",
     tech: ["Next.js", "React", "Typescript", "Velite", "Docker"],
   },
   {
@@ -106,7 +106,7 @@ export const projectsData = [
     mediaList: [
       {
         url: "/videos/clitetris.mp4",
-        text: "some text here explaining things in the video",
+        text: "",
         type: "video/mp4",
       },
     ],
@@ -114,7 +114,7 @@ export const projectsData = [
     tagline: "Classic Tetris, reimagined for the terminal",
     shortDescription:
       "A fully playable Tetris clone built in Rust for the command line.",
-    why: "I was learning Rust and listening to a tetris theme based song that just came out then. I felt it would be cool to build a CLI tetris game with that song as the soundtrack.",
+    why: "While learning Rust, I was listening to the title song for the movie about the creation of Tetris. So, I decided to build a Tetris game for the terminal, with the song playing in the background as you play. You can choose any mp3 you want as the soundtrack.",
     tech: ["Rust"],
   },
   {
@@ -125,7 +125,7 @@ export const projectsData = [
     tagline: "Get to the point of any video, fast",
     shortDescription:
       "Summarise local or YouTube videos with AI, then ask follow-up questions.",
-    why: "Nobody likes getting clickbaited. I wanted a tool that would give me a detailed yet concise summary to learn what the YouTube video was about. YouTube's integrated summariser is terrible at this.",
+    why: "Nobody likes getting clickbaited. There are many summary tools available, including YouTube's integrated summariser. However, I've found most of those rather insufficient. So, I created a tool that would give users a more detailed yet concise summary to learn what a specific YouTube video was about. You can even ask follow-up questions.",
     tech: ["Python", "Gemini"],
   },
   {
@@ -137,7 +137,7 @@ export const projectsData = [
     tagline: "Replacing paper workflows with a custom solution",
     shortDescription:
       "A custom inventory and sales system built to replace error-prone paper-based workflows for schools.",
-    why: "My family's schools were using a paper-based and highly error-prone system to manage the school inventory and sales. They asked me to build an app that would mirror their old workflow but also prevent the different ways data was being entered incorrectly.",
+    why: "My family's private schools relied on a paper-based, highly error-prone system to manage combined inventories and sales across their schools. I solved the issue with an app that would mirror the existing workflow in a digital, secure environment. The app also introduced safeguards against incorrect data entries. App features different admin permissions to maintain control and can monitor sales amounts and total revenue, as well as inventory sizes for different products. It also logs every action taken by the users for admins to review later.",
     tech: [
       "Next.js",
       "React",
@@ -157,7 +157,7 @@ export const projectsData = [
     tagline: "Filter Spotify playlists from the command line",
     shortDescription:
       "A CLI tool to generate new Spotify playlists filtered by release date or artist.",
-    why: "I was about to leave for a flight and I needed music. I wanted to create a playlist of old songs pulled from my one big playlist.",
+    why: "People often use one or two giant playlists for all the songs they like on Spotify. While this is convenient, you lose the ability to filter songs by specific artists or release dates for a listening session. This lets you create playlists based on those filters, pulling songs only from your chosen playlists.",
     tech: ["C#"],
   },
   {
@@ -165,10 +165,17 @@ export const projectsData = [
     githubProjectName: "download-watcher",
     description:
       "A background watcher that cleans up your download folder based on the rules you specify. It can also be run as a one-off to cleanup any other folders.",
+    mediaList: [
+      {
+        url: "/videos/downloadwatcher.mp4",
+        text: "",
+        type: "video/mp4",
+      },
+    ],
     tagline: "Automate your download folder cleanup",
     shortDescription:
       "A background service that organises and cleans your downloads based on custom rules.",
-    why: "There's a lot of junk that piles up in your download folder. Some of it is used just once and can be removed after. Some of it needs to be moved elsewhere. This automates the organisation and cleanup.",
+    why: "There's a lot of junk that piles up in your download folder. Some of it is used just once and can be removed after, while some of it needs to be moved elsewhere. This app automates the organisation and cleanup.",
     tech: ["C#"],
   },
   {
@@ -180,8 +187,8 @@ export const projectsData = [
     homePage: "https://badmagick.itch.io/cublaster",
     tagline: "A 3D browser game built with Three.js",
     shortDescription:
-      "A browser-based 3D game where you blast enemies off a platform, built for a game jam.",
-    why: "This was built for a game jam. I wanted to learn some Three.js.",
+      "A 3D browser-based game where you control a geometric shape and blast enemies off the platform.",
+    why: "Participated in a game jam with a friend and used the experience as an opportunity to learn Three.js.",
     tech: ["Javascript", "Three.js"],
   },
   {
@@ -222,7 +229,7 @@ export const projectsData = [
     tagline: "A scrollable list component for React Ink",
     shortDescription:
       "A keyboard-navigable, scrollable list component for building terminal UIs with React Ink.",
-    why: "I needed a scrollable list component for the server side TUI.",
+    why: "I needed a scrollable list component for the server-side terminal user interface of my remote ffmpeg service.",
     tech: ["React", "Typescript"],
   },
 ] as ProjectData[];
