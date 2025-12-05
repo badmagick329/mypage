@@ -61,6 +61,9 @@
   --sidebar-accent-foreground: var(--foreground);
   --sidebar-border: var(--border);
   --sidebar-ring: var(--ring);
+
+  /* Plyr video player */
+  --plyr-color-main: var(--primary);
 }
 
 .dark {
@@ -118,6 +121,9 @@
   --sidebar-accent-foreground: var(--foreground);
   --sidebar-border: var(--border);
   --sidebar-ring: var(--ring);
+
+  /* Plyr video player */
+  --plyr-color-main: var(--primary);
 }
 
 @theme inline {

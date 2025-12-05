@@ -11,6 +11,7 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import VideoPlayer from "@/app/projects/_components/VideoPlayer";
 
 export default function ProjectMediaDisplay({
   mediaList,
@@ -22,7 +23,7 @@ export default function ProjectMediaDisplay({
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (!api) {
+    if (!api || mediaList.length === 1) {
       return;
     }
     setCount(api.scrollSnapList().length);
@@ -31,7 +32,16 @@ export default function ProjectMediaDisplay({
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap() + 1);
     });
-  }, [api]);
+  }, [api, mediaList.length]);
+
+  if (mediaList.length === 1) {
+    const m = mediaList[0];
+    return (
+      <div className="mx-auto w-full max-w-xl">
+        {m.type.startsWith("video") ? <VideoPlayer src={m.url} /> : null}
+      </div>
+    );
+  }
 
   return (
     <Carousel setApi={setApi} className="mx-auto w-full max-w-xl">
@@ -40,15 +50,15 @@ export default function ProjectMediaDisplay({
           return m.type.startsWith("video") ? (
             <CarouselItem key={m.url}>
               <div className="flex flex-col gap-1 text-center">
-                <video muted controls>
-                  <source src={m.url} type={m.type} />
-                </video>
-                {count > 0 && (
+                <VideoPlayer src={m.url} muted />
+                {count > 1 && (
                   <span className="text-foreground-muted text-xs sm:text-sm">
                     {current} of {count}
                   </span>
                 )}
-                <span className="mt-1 text-xs sm:text-sm">{m.text}</span>
+                {m.text && (
+                  <span className="mt-1 text-xs sm:text-sm">{m.text}</span>
+                )}
               </div>
             </CarouselItem>
           ) : null;
