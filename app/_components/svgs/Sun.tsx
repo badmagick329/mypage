@@ -1,4 +1,4 @@
-export default function Sun() {
+export default function Sun({ className = "" }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,6 +10,7 @@ export default function Sun() {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      className={className}
     >
       <circle cx="12" cy="12" r="4" />
       <path d="M12 2v2" />
