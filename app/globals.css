@@ -4,9 +4,9 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(0.9 0.02 315);
-  --background-light: oklch(0.94 0.02 315);
-  --background-lighter: oklch(0.98 0.02 315);
+  --background: oklch(0.9 0 0);
+  --background-light: oklch(0.94 0 0);
+  --background-lighter: oklch(0.98 0 0);
   --foreground: oklch(0.2 0 0);
   --foreground-strong: oklch(0.1 0 0);
   --foreground-muted: oklch(0.45 0 0);
@@ -30,7 +30,7 @@
   --popover: var(--background-light);
   --popover-foreground: var(--foreground);
 
-  --primary-foreground: var(--foreground);
+  --primary-foreground: var(--background-lighter);
 
   --secondary: var(--background-light);
   --secondary-foreground: var(--foreground);
@@ -93,7 +93,7 @@
   --popover: var(--background-light);
   --popover-foreground: var(--foreground);
 
-  --primary-foreground: var(--foreground);
+  --primary-foreground: var(--foreground-strong);
 
   --secondary: var(--background-light);
   --secondary-foreground: var(--foreground);
