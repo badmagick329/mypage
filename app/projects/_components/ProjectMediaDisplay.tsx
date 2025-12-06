@@ -64,7 +64,7 @@ export default function ProjectMediaDisplay({
         <div className="absolute top-1/2 left-2 flex items-center justify-center">
           <CarouselPrevious
             variant={"ghost"}
-            className="bg-primary/80 hover:bg-primary/65! relative left-0 translate-x-0 hover:translate-x-0 hover:cursor-pointer"
+            className="bg-primary/80 hover:bg-primary/65! text-background-lighter dark:text-foreground-strong hover:text-background-lighter dark:hover:text-foreground-strong relative left-0 translate-x-0 hover:translate-x-0 hover:cursor-pointer"
           />
         </div>
       )}
@@ -72,7 +72,7 @@ export default function ProjectMediaDisplay({
         <div className="absolute top-1/2 right-2 flex items-center justify-center">
           <CarouselNext
             variant={"ghost"}
-            className="bg-primary/80 hover:bg-primary/65! relative right-0 translate-x-0 hover:translate-x-0 hover:cursor-pointer"
+            className="bg-primary/80 hover:bg-primary/65! text-background-lighter dark:text-foreground-strong dark:hover:text-background-lighter hover:text-foreground-strong relative left-0 translate-x-0 hover:translate-x-0 hover:cursor-pointer"
           />
         </div>
       )}
