@@ -43,3 +43,5 @@ next-env.d.ts
 
 notes/*
 public/videos/*
+Dockerfile
+docker-compose.yml
