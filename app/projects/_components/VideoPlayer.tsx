@@ -15,7 +15,6 @@ interface VideoPlayerProps {
 export default function VideoPlayer({
   src,
   title,
-  // poster = "/thumbnail.jpg",
   type,
   autoplay = false,
   muted = false,
@@ -46,7 +45,7 @@ export default function VideoPlayer({
         settings: ["captions", "speed", "loop"],
         speed: {
           selected: 1,
-          options: [0.5, 0.75, 1, 1.25, 1.5, 2],
+          options: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
         },
         tooltips: {
           controls: true,
@@ -68,7 +67,7 @@ export default function VideoPlayer({
         ref={videoRef}
         controls
         playsInline
-        data-poster={`${src}-poster.jpg`}
+        data-poster={`${src}-poster.webp`}
         title={title}
       >
         <source src={src} type={type} />

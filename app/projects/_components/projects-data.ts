@@ -18,6 +18,13 @@ export const projectsData = [
     githubProjectName: "ffmpeg_service",
     description:
       "Offload batches of ffmpeg commands to your homelab or VPS instances. Files are sent to the servers, processed, and copied back to your machine.",
+    mediaList: [
+      {
+        url: "/videos/remoteffmpeg.mp4",
+        text: "",
+        type: "video/mp4",
+      },
+    ],
     tagline: "Offload heavy video encoding to your server",
     shortDescription:
       "Batch process FFmpeg commands on a remote server, freeing your local machine from slow AV1 encodes.",
@@ -30,6 +37,23 @@ export const projectsData = [
     homePage: "https://mgck.ink/gfys",
     description:
       "A webpage to browse high-quality GIFs of the K-pop girl group Red Velvet, migrated from Gfycat.",
+    mediaList: [
+      {
+        url: "/videos/gfys.mp4",
+        text: "Browse through Red Velvet GIFs",
+        type: "video/mp4",
+      },
+      {
+        url: "/videos/gfys2.mp4",
+        text: "Filter results by account, date, title or tags",
+        type: "video/mp4",
+      },
+      {
+        url: "/videos/gfys3.mp4",
+        text: "Autoplay the filtered results on loop",
+        type: "video/mp4",
+      },
+    ],
     tagline: "Preserving content from Gfycat's shutdown",
     shortDescription:
       "A searchable archive of high-quality Red Velvet clips rescued before Gfycat's 2023 shutdown.",
@@ -50,6 +74,13 @@ export const projectsData = [
     homePage: "https://mgck.ink/discordgifs",
     description:
       "Create emotes and stickers for Discord from your video clips, complying with Discord's size limits.",
+    mediaList: [
+      {
+        url: "/videos/discordgifs.mp4",
+        text: "",
+        type: "video/mp4",
+      },
+    ],
     tagline: "Create Discord emotes without the size limit guesswork",
     shortDescription:
       "Turn video clips into Discord-ready emotes and stickers, automatically optimized to meet file size limits.",
@@ -62,6 +93,13 @@ export const projectsData = [
     homePage: "https://mgck.ink/kpop",
     description:
       "Stay ahead of the latest Kpop comebacks by your favourite groups. Search for any comebacks you may have missed.",
+    mediaList: [
+      {
+        url: "/videos/kpop.mp4",
+        text: "",
+        type: "video/mp4",
+      },
+    ],
     tagline: "Never miss a Kpop comeback",
     shortDescription:
       "Track upcoming releases and discover past comebacks from your favorite Kpop groups.",
@@ -81,6 +119,18 @@ export const projectsData = [
     githubProjectName: "foodinventorymanager",
     description:
       "A food inventory management app. It features automated receipt parsing and a conversational AI assistant accessible via Discord.",
+    mediaList: [
+      {
+        url: "/videos/foodinventory.mp4",
+        text: "Web app with receipt parsing",
+        type: "video/mp4",
+      },
+      {
+        url: "/videos/foodinventory2.mp4",
+        text: "Conversational agent",
+        type: "video/mp4",
+      },
+    ],
     tagline: "Pantry tracking with receipt parsing and an AI chatbot",
     shortDescription:
       "Manage household food inventory with automated receipt parsing and a conversational Discord assistant.",
@@ -122,6 +172,13 @@ export const projectsData = [
     githubProjectName: "gemini_summariser",
     description:
       "A video summariser with a follow up Q&A mode. Supports both local and YouTube videos.",
+    mediaList: [
+      {
+        url: "/videos/geminisummariser.mp4",
+        text: "",
+        type: "video/mp4",
+      },
+    ],
     tagline: "Get to the point of any video, fast",
     shortDescription:
       "Summarise local or YouTube videos with AI, then ask follow-up questions.",
@@ -132,6 +189,18 @@ export const projectsData = [
     name: "School Inventory and Sales Manager",
     githubProjectName: "inventorymanager",
     homePage: "https://inv.mgck.ink",
+    mediaList: [
+      {
+        url: "/videos/inventorymanager.mp4",
+        text: "",
+        type: "video/mp4",
+      },
+      {
+        url: "/videos/inventorymanager2.mp4",
+        text: "All actions are logged for admin review",
+        type: "video/mp4",
+      },
+    ],
     description:
       "An inventory and sales manager built for my family's schools.",
     tagline: "Replacing paper workflows with a custom solution",
@@ -151,6 +220,13 @@ export const projectsData = [
   {
     name: "Spotify Playlist Maker",
     githubProjectName: "spotify-playlist-cli",
+    mediaList: [
+      {
+        url: "/videos/spotifyplaylistcli.mp4",
+        text: "",
+        type: "video/mp4",
+      },
+    ],
     description:
       "A CLI app to create filtered Spotify playlists from existing playlists. You can filter by release date and/or artists.",
 
@@ -184,6 +260,13 @@ export const projectsData = [
     description:
       "A 3D browser-based game where you control a geometric shape and blast enemies off the platform.",
 
+    mediaList: [
+      {
+        url: "/videos/cublaster.mp4",
+        text: "",
+        type: "video/mp4",
+      },
+    ],
     homePage: "https://badmagick.itch.io/cublaster",
     tagline: "A 3D browser game built with Three.js",
     shortDescription:
@@ -195,6 +278,18 @@ export const projectsData = [
     name: "Pomodoro in the Terminal",
     githubProjectName: "pomodoro-cli",
     description: "A simple and customisable terminal based pomodoro app.",
+    mediaList: [
+      {
+        url: "/videos/pomodoro.mp4",
+        text: "Timer defaults",
+        type: "video/mp4",
+      },
+      {
+        url: "/videos/pomodoro2.mp4",
+        text: "Custom flags let you change the number of periods and their duration",
+        type: "video/mp4",
+      },
+    ],
     tagline: "A simple, customisable pomodoro timer for the CLI",
     shortDescription:
       "A simple, customisable pomodoro timer for the command line.",
@@ -226,6 +321,13 @@ export const projectsData = [
     githubProjectName: "ink-scrollable-list",
     description:
       "A scrollable list component package for React Ink. Supports keyboard navigation and customisable scroll bars.",
+    mediaList: [
+      {
+        url: "/videos/inkscrollablelist.mp4",
+        text: "",
+        type: "video/mp4",
+      },
+    ],
     tagline: "A scrollable list component for React Ink",
     shortDescription:
       "A keyboard-navigable, scrollable list component for building terminal UIs with React Ink.",

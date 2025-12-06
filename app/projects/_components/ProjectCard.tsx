@@ -21,9 +21,7 @@ export default function ProjectCard({
   const [isMinimized, setIsMinimized] = useState(true);
 
   return (
-    <article
-      className={`bg-background-light shadow-card group -mt-1 flex w-full flex-col items-start gap-4 rounded-t-md first:mt-0 last:rounded-md sm:max-w-[80%] lg:max-w-[60%]`}
-    >
+    <article className="bg-background-light shadow-card group -mt-1 flex w-full flex-col items-start gap-4 rounded-t-md first:mt-0 last:rounded-md sm:max-w-[80%] lg:max-w-[60%]">
       <section
         className={`bg-background-lighter/60 relative flex w-full justify-between rounded-t-md px-2 py-6 select-none group-last:rounded-md hover:cursor-pointer`}
         onClick={() => setIsMinimized((p) => !p)}
@@ -40,15 +38,16 @@ export default function ProjectCard({
           <ChevronUp className={iconSize} />
         )}
       </section>
-      {!isMinimized && (
+      <section className={`w-full ${isMinimized ? "hidden" : ""}`}>
         <AdditionalDetail
           mediaList={mediaList}
           description={description}
           why={why}
           tech={tech}
           githubProjectName={githubProjectName}
+          isMinimized={isMinimized}
         />
-      )}
+      </section>
     </article>
   );
 }
@@ -93,10 +92,11 @@ function AdditionalDetail({
   tech,
   mediaList,
   githubProjectName,
+  isMinimized,
 }: Pick<
   ProjectData,
   "description" | "why" | "tech" | "githubProjectName" | "mediaList"
->) {
+> & { isMinimized: boolean }) {
   return (
     <>
       <div className="flex flex-col gap-8 px-2">
@@ -109,7 +109,10 @@ function AdditionalDetail({
         </section>
         {mediaList && (
           <section>
-            <ProjectMediaDisplay mediaList={mediaList} />
+            <ProjectMediaDisplay
+              mediaList={mediaList}
+              isVisible={!isMinimized}
+            />
           </section>
         )}
       </div>
