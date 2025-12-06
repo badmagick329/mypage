@@ -30,7 +30,9 @@ function NavLink({ text, href }: { text: string; href: string }) {
       className="hover:text-primary xs:px-4 rounded-md px-2 py-2 text-shadow-2xs hover:cursor-pointer"
       href={href}
     >
-      {text}
+      <span className="inline-block transition-transform hover:scale-110">
+        {text}
+      </span>
     </Link>
   );
 }

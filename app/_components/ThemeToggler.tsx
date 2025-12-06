@@ -16,7 +16,7 @@ export default function ThemeToggler() {
 
   if (!mounted) {
     return (
-      <div className="flex flex-col w-6 h-6 bg-background-lighter rounded-md"></div>
+      <div className="bg-background-lighter flex h-6 w-6 flex-col rounded-md"></div>
     );
   }
 
@@ -24,17 +24,17 @@ export default function ThemeToggler() {
     <div className="flex flex-col">
       {theme === "dark" ? (
         <button
-          className="hover:text-amber-500 hover:cursor-pointer"
+          className="hover:cursor-pointer hover:text-amber-500"
           onClick={() => setTheme("light")}
         >
-          <Sun />
+          <Sun className="hover:scale-110" />
         </button>
       ) : (
         <button
-          className="hover:text-blue-400 hover:cursor-pointer"
+          className="hover:cursor-pointer hover:text-blue-400"
           onClick={() => setTheme("dark")}
         >
-          <Moon />
+          <Moon className="hover:scale-110" />
         </button>
       )}
     </div>
