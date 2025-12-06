@@ -26,10 +26,20 @@ export default function WelcomeMessage() {
       <section className="p-4">
         <p>
           I like solving problems by building software. I primarily work on web
-          apps. Please feel free to look through some of my projects.
+          apps. Please feel free to look through some of my{" "}
+          <a href="/projects" className="font-semibold hover:underline">
+            projects
+          </a>
+          .
         </p>
         <br />
-        <p>Check out the contact page if you&apos;d like to get in touch.</p>
+        <p>
+          Say hi to me on the{" "}
+          <a href="/contact" className="font-semibold hover:underline">
+            contacts
+          </a>{" "}
+          page
+        </p>
       </section>
     </article>
   );

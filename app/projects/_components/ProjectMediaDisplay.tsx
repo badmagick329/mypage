@@ -1,17 +1,15 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { ProjectMedia } from "@/app/projects/_components/projects-data";
-import { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  type CarouselApi,
 } from "@/components/ui/carousel";
 import VideoPlayer from "@/app/projects/_components/VideoPlayer";
+import useProjectMediaDisplay from "@/hooks/projects/useProjectMediaDisplay";
 
 export default function ProjectMediaDisplay({
   mediaList,
@@ -20,30 +18,10 @@ export default function ProjectMediaDisplay({
   mediaList: ProjectMedia[];
   isVisible?: boolean;
 }) {
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!api || mediaList.length === 1) {
-      return;
-    }
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api, mediaList.length]);
-
-  useEffect(() => {
-    if (!api || !isVisible || mediaList.length === 1) {
-      return;
-    }
-    api.reInit();
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-  }, [api, isVisible, mediaList.length]);
+  const { setApi, current, count } = useProjectMediaDisplay({
+    mediaListLength: mediaList.length,
+    isVisible,
+  });
 
   if (mediaList.length === 1) {
     const m = mediaList[0];
@@ -64,8 +42,8 @@ export default function ProjectMediaDisplay({
   return (
     <Carousel setApi={setApi} className="mx-auto w-full max-w-xl">
       <CarouselContent className="flex items-center">
-        {mediaList.map((m) => {
-          return m.type.startsWith("video") ? (
+        {mediaList.map((m) =>
+          m.type.startsWith("video") ? (
             <CarouselItem key={m.url}>
               <div className="flex flex-col gap-1 text-center">
                 <VideoPlayer src={m.url} muted />
@@ -79,8 +57,8 @@ export default function ProjectMediaDisplay({
                 )}
               </div>
             </CarouselItem>
-          ) : null;
-        })}
+          ) : null,
+        )}
       </CarouselContent>
       {current > 1 && (
         <div className="absolute top-1/2 left-2 flex items-center justify-center">

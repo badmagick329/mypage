@@ -1,12 +1,5 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { useState } from "react";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
@@ -29,77 +22,68 @@ export default function ContactForm() {
   }
 
   return (
-    <Card className="rounded-md">
-      <CardHeader>
-        <CardTitle className="mb-4 text-xl font-semibold">
-          Or send a message
-        </CardTitle>
-        <CardDescription>
-          And I&apos;ll get back to you as soon as I can.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="px-2 sm:px-4 md:px-6">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="name" className="text-sm font-medium">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              className="bg-background focus:ring-ring rounded-md border px-4 py-2 focus:ring-2 focus:outline-none"
-              placeholder="Your name"
-              autoComplete="off"
-            />
-          </div>
+    <div className="shadow-card bg-background-light rounded-md px-2 py-6 sm:px-4 md:px-6">
+      <h3 className="mb-8 text-2xl font-semibold">Or send me a message</h3>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <label htmlFor="name" className="text-sm font-medium">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            className="bg-background focus:ring-ring rounded-md border p-2 focus:ring-2 focus:outline-none"
+            placeholder="Your name"
+            autoComplete="off"
+          />
+        </div>
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-sm font-medium">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              className="bg-background focus:ring-ring rounded-md border px-4 py-2 focus:ring-2 focus:outline-none"
-              placeholder="you@example.com"
-              autoComplete="off"
-            />
-          </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="email" className="text-sm font-medium">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            className="bg-background focus:ring-ring rounded-md border p-2 focus:ring-2 focus:outline-none"
+            placeholder="you@example.com"
+            autoComplete="off"
+          />
+        </div>
 
-          <div className="flex flex-col gap-2">
-            <label htmlFor="message" className="text-sm font-medium">
-              Message
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              required
-              rows={5}
-              className="bg-background focus:ring-ring rounded-md border px-4 py-2 focus:ring-2 focus:outline-none"
-              placeholder="Your message here..."
-            />
-          </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="message" className="text-sm font-medium">
+            Message
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            required
+            rows={5}
+            className="bg-background focus:ring-ring min-h-12 rounded-md border p-2 focus:ring-2 focus:outline-none"
+            placeholder="Your message here..."
+          />
+        </div>
 
-          {status === "error" && (
-            <p className="text-sm text-red-500">{errorMessage}</p>
-          )}
+        {status === "error" && (
+          <p className="text-sm text-red-500">{errorMessage}</p>
+        )}
 
-          <div className="mx-auto">
-            <button
-              type="submit"
-              disabled={status === "submitting"}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 font-medium transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {status === "submitting" ? "Sending..." : "Send Message"}
-            </button>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
+        <div className="mx-auto">
+          <button
+            type="submit"
+            disabled={status === "submitting"}
+            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 font-medium transition-colors hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {status === "submitting" ? "Sending..." : "Send Message"}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 
