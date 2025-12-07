@@ -46,7 +46,6 @@ export default function AnimatedBackground() {
         opacity: 0;
         filter: blur(60px);
         pointer-events: none;
-        will-change: transform, opacity;
         transition: opacity 0.1s linear;
       `;
 

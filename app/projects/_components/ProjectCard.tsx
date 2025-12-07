@@ -40,6 +40,7 @@ export default function ProjectCard({
   return (
     <article
       ref={cardRef}
+      style={{ overflowAnchor: "none" }}
       className="bg-background-light shadow-card group -mt-1 flex w-full scroll-mt-20 flex-col items-start gap-4 rounded-t-md first:mt-0 last:rounded-md sm:max-w-[80%] lg:max-w-[60%]"
     >
       <section
