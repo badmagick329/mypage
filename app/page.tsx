@@ -5,10 +5,17 @@ export const metadata: Metadata = {
   title: "Home | Uzair",
   description:
     "Welcome to my portfolio. I'm a full stack developer who loves solving problems by building software, primarily web applications.",
+  keywords: [
+    "full stack developer",
+    "web developer",
+    "software developer",
+    "programmer",
+    "portfolio",
+  ],
   openGraph: {
     title: "Uzair | Full Stack Developer",
     description:
-      "Welcome to my portfolio. I'm a full stack developer who loves solving problems by building software.",
+      "Welcome to my portfolio. I'm a full stack developer who loves solving problems by building software, primarily web applications.",
     url: "/",
   },
   alternates: {

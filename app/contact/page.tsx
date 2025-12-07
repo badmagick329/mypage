@@ -7,19 +7,19 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description:
-    "Get in touch with me for collaboration, job opportunities, or just to say hello. Reach out via email, GitHub, or Discord.",
+  description: "Get in touch with me for collaboration, or just to say hello.",
   keywords: [
     "contact developer",
     "hire developer",
     "web developer contact",
     "freelance developer",
+    "freelance programmer",
+    "contact programmer",
     "collaboration",
   ],
   openGraph: {
     title: "Contact | Uzair",
-    description:
-      "Want to work together? Get in touch via email, GitHub, or Discord.",
+    description: "Want to work together? Get in touch.",
     url: "/contact",
   },
   alternates: {

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: "%s | Uzair",
   },
   description:
-    "Full stack developer specializing in web applications. Building modern, responsive solutions with React, Next.js, TypeScript, and more.",
+    "Full stack developer specialising in web applications. Building modern, responsive solutions with React, Next.js, TypeScript, and more.",
   keywords: [
     "full stack developer",
     "web developer",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: "Uzair | Portfolio",
     title: "Uzair | Full Stack Developer",
     description:
-      "Full stack developer specializing in web applications. Explore my projects and get in touch.",
+      "Full stack developer specialising in web applications. Explore my projects and get in touch.",
     images: [
       {
         url: "/wand.png",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Uzair | Full Stack Developer",
     description:
-      "Full stack developer specializing in web applications. Explore my projects and get in touch.",
+      "Full stack developer specialising in web applications. Explore my projects and get in touch.",
     images: ["/wand.png"],
   },
   robots: {

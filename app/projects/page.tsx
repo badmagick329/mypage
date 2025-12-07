@@ -5,7 +5,7 @@ import { projectsData } from "@/app/projects/_components/projects-data";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Explore my portfolio of web development projects including video encoding services, archive tools, Discord utilities, and more. Built with React, Next.js, TypeScript, Python, and Django.",
+    "Explore my portfolio of web development projects. Built with React, Next.js, TypeScript, Python, and Django.",
   keywords: [
     "web development projects",
     "React projects",
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     "TypeScript projects",
     "full stack projects",
     "software portfolio",
+    "programmer portfolio",
   ],
   openGraph: {
     title: "Projects | Uzair",
