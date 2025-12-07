@@ -8,6 +8,7 @@ export type ProjectData = {
   description: string;
   why: string;
   tech: string[];
+  tags: string[];
 };
 
 export type ProjectMedia = { url: string; text: string; type: string };
@@ -30,6 +31,7 @@ export const projectsData = [
       "Batch process FFmpeg commands on a remote server, freeing your local machine from slow AV1 encodes.",
     why: "AV1 video encoding can be slow. Workloads can keep your computer busy for hours and you can't do much while you're waiting for this process. This lets you send your workload to one or more remote machines where they will be processed in parallel, and the results will be sent back to your machine.",
     tech: ["React", "Typescript", "Docker", "FFmpeg"],
+    tags: ["React", "Typescript", "Docker", "FFmpeg", "CLI App", "SQL"],
   },
   {
     name: "Red Velvet Gfy Archive",
@@ -67,6 +69,17 @@ export const projectsData = [
       "Postgres",
       "Docker",
     ],
+    tags: [
+      "Next.js",
+      "React",
+      "Django",
+      "Typescript",
+      "Python",
+      "Postgres",
+      "Docker",
+      "Web App",
+      "SQL",
+    ],
   },
   {
     name: "Discord Emotes and Stickers",
@@ -86,6 +99,7 @@ export const projectsData = [
       "Turn video clips into Discord-ready emotes and stickers, automatically optimized to meet file size limits.",
     why: "When creating your own stickers or emotes for Discord, you often have to play a 'guess the frame size' game. This results in recreating the emote and sticker multiple times to get the right size. With this app, you can automate this tedious process.",
     tech: ["Next.js", "React", "Typescript", "FFmpeg", "Docker"],
+    tags: ["Next.js", "React", "Typescript", "FFmpeg", "Docker", "Web App"],
   },
   {
     name: "Kpop Releases",
@@ -113,6 +127,17 @@ export const projectsData = [
       "Postgres",
       "Docker",
     ],
+    tags: [
+      "Next.js",
+      "React",
+      "Django",
+      "Typescript",
+      "Python",
+      "Postgres",
+      "Docker",
+      "Web App",
+      "SQL",
+    ],
   },
   {
     name: "Food Inventory Manager",
@@ -135,7 +160,19 @@ export const projectsData = [
     shortDescription:
       "Manage household food inventory with automated receipt parsing and a conversational Discord assistant.",
     why: "Keeping track of everything in your pantry can be a challenge, especially when it comes to use-by dates. This app makes it easy to view the content of your fridge, freezer and pantry, no matter where you are. Best-by dates help you reduce food waste, and the displayed quantities ensure you only buy the amount you need during your weekly shop. You can also input your Ocado PDF-receipts for home deliveries to avoid having to manually enter each item. An AI chatbot is also available through discord which makes it easier to query the app and even remove items as you're cooking.",
-    tech: ["Next.js", "React", "Typescript", "Gemini", "Docker"],
+    tech: ["Next.js", "React", "Typescript", "Postgres", "Gemini", "Docker"],
+    tags: [
+      "Next.js",
+      "React",
+      "Typescript",
+      "AI",
+      "Docker",
+      "BullMQ",
+      "Web App",
+      "Postgres",
+      "SQL",
+      "Web App",
+    ],
   },
   {
     name: "Website for a copywriter",
@@ -148,6 +185,7 @@ export const projectsData = [
       "A professional website with an integrated blog, built for a freelance copywriter.",
     why: "A copywriter wanted me to create a website that also includes a blog. A modern interface with easy-to-use customisation options that allow the owner to update and monitor the website and blog traffic.",
     tech: ["Next.js", "React", "Typescript", "Velite", "Docker"],
+    tags: ["Next.js", "React", "Typescript", "Docker"],
   },
   {
     name: "Tetris in the Terminal",
@@ -166,6 +204,7 @@ export const projectsData = [
       "A fully playable Tetris clone built in Rust for the command line.",
     why: "While learning Rust, I was listening to the title song for the movie about the creation of Tetris. So, I decided to build a Tetris game for the terminal, with the song playing in the background as you play. You can choose any mp3 you want as the soundtrack.",
     tech: ["Rust"],
+    tags: ["Rust", "CLI App", "Game"],
   },
   {
     name: "Video Summariser",
@@ -184,6 +223,7 @@ export const projectsData = [
       "Summarise local or YouTube videos with AI, then ask follow-up questions.",
     why: "Nobody likes getting clickbaited. There are many summary tools available, including YouTube's integrated summariser. However, I've found most of those rather insufficient. So, I created a tool that would give users a more detailed yet concise summary to learn what a specific YouTube video was about. You can even ask follow-up questions.",
     tech: ["Python", "Gemini"],
+    tags: ["Python", "AI"],
   },
   {
     name: "School Inventory and Sales Manager",
@@ -216,6 +256,16 @@ export const projectsData = [
       "Postgres",
       "Docker",
     ],
+    tags: [
+      "Next.js",
+      "React",
+      "Typescript",
+      "Django",
+      "Python",
+      "Postgres",
+      "Docker",
+      "Web App",
+    ],
   },
   {
     name: "Spotify Playlist Maker",
@@ -235,6 +285,7 @@ export const projectsData = [
       "A CLI tool to generate new Spotify playlists filtered by release date or artist.",
     why: "People often use one or two giant playlists for all the songs they like on Spotify. While this is convenient, you lose the ability to filter songs by specific artists or release dates for a listening session. This lets you create playlists based on those filters, pulling songs only from your chosen playlists.",
     tech: ["C#"],
+    tags: ["C#", "CLI App"],
   },
   {
     name: "Download Watcher",
@@ -253,6 +304,7 @@ export const projectsData = [
       "A background service that organises and cleans your downloads based on custom rules.",
     why: "There's a lot of junk that piles up in your download folder. Some of it is used just once and can be removed after, while some of it needs to be moved elsewhere. This app automates the organisation and cleanup.",
     tech: ["C#"],
+    tags: ["C#", "CLI App"],
   },
   {
     name: "Cublaster Game",
@@ -273,6 +325,7 @@ export const projectsData = [
       "A 3D browser-based game where you control a geometric shape and blast enemies off the platform.",
     why: "Participated in a game jam with a friend and used the experience as an opportunity to learn Three.js.",
     tech: ["Javascript", "Three.js"],
+    tags: ["Javascript", "Three.js", "Game", "Web App"],
   },
   {
     name: "Pomodoro in the Terminal",
@@ -295,6 +348,7 @@ export const projectsData = [
       "A simple, customisable pomodoro timer for the command line.",
     why: "I was looking into the pomodoro method. I was also learning Go and this was a good excuse to make a CLI Go app.",
     tech: ["Go"],
+    tags: ["Go", "CLI App"],
   },
   {
     name: "Advent of Code 2024",
@@ -305,6 +359,7 @@ export const projectsData = [
       "My solutions to the Advent of Code 2024 challenges, written in C#.",
     why: "I was learning C#.",
     tech: ["C#"],
+    tags: ["C#"],
   },
   {
     name: "Advent of Code 2023",
@@ -315,6 +370,7 @@ export const projectsData = [
       "My solutions to the Advent of Code 2023 challenges, written in Go.",
     why: "I was learning Go.",
     tech: ["Go"],
+    tags: ["Go"],
   },
   {
     name: "Ink Scrollable List",
@@ -333,5 +389,6 @@ export const projectsData = [
       "A keyboard-navigable, scrollable list component for building terminal UIs with React Ink.",
     why: "I needed a scrollable list component for the server-side terminal user interface of my remote ffmpeg service.",
     tech: ["React", "Typescript"],
+    tags: ["React", "Typescript"],
   },
 ] as ProjectData[];

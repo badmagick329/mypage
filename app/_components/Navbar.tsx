@@ -2,10 +2,10 @@ import ThemeToggler from "@/app/_components/ThemeToggler";
 import Link from "next/link";
 export default function Navbar() {
   return (
-    <nav className="bg-background-light w-full">
+    <nav className="bg-background-light sticky top-0 z-10 w-full">
       <div className="grid grid-cols-3 items-center">
         <div></div>
-        <ul className="xs:text-lg xs:gap-4 flex justify-center gap-2 py-4 text-base font-semibold">
+        <ul className="xs:text-xl xs:gap-4 xs:font-bold flex justify-center gap-2 py-4 text-base font-semibold">
           <li>
             <NavLink text="Home" href="/" />
           </li>

@@ -38,16 +38,18 @@ export default function ProjectCard({
           <ChevronUp className={iconSize} />
         )}
       </section>
-      <section className={`w-full ${isMinimized ? "hidden" : ""}`}>
-        <AdditionalDetail
-          mediaList={mediaList}
-          description={description}
-          why={why}
-          tech={tech}
-          githubProjectName={githubProjectName}
-          isMinimized={isMinimized}
-        />
-      </section>
+      {!isMinimized && (
+        <section>
+          <AdditionalDetail
+            mediaList={mediaList}
+            description={description}
+            why={why}
+            tech={tech}
+            githubProjectName={githubProjectName}
+            isMinimized={isMinimized}
+          />
+        </section>
+      )}
     </article>
   );
 }
