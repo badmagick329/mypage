@@ -28,8 +28,8 @@ export default function AnimatedBackground() {
     const container = containerRef.current;
     if (!container) return;
 
-    const minOrbs = 3;
-    const maxOrbs = 6;
+    const minOrbs = 2;
+    const maxOrbs = 4;
     const orbs: Orb[] = [];
 
     const createOrb = (fadeIn = true): Orb => {

@@ -45,16 +45,7 @@ export default function ProjectsClientPage({
           {filteredProjects.map((p) => (
             <ProjectCard
               key={p.name}
-              name={p.name}
-              githubProjectName={p.githubProjectName}
-              homePage={p?.homePage}
-              tagline={p.tagline}
-              shortDescription={p.shortDescription}
-              mediaList={p?.mediaList}
-              description={p.description}
-              why={p.why}
-              tech={p.tech}
-              tags={p.tags}
+              projectData={p}
               toggleExpansion={toggleExpansion}
               expandedProject={expandedProject}
             />

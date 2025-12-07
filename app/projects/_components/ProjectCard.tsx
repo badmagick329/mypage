@@ -9,20 +9,24 @@ import { useRef, useEffect } from "react";
 const iconSize = "xs:w-4 xs:h-4 mt-1 h-3 w-3";
 
 export default function ProjectCard({
-  name,
-  githubProjectName,
-  homePage,
-  mediaList,
-  tagline,
-  description,
-  why,
-  tech,
+  projectData,
   toggleExpansion,
   expandedProject,
-}: ProjectData & {
+}: {
+  projectData: ProjectData;
   toggleExpansion: (name: string) => void;
   expandedProject: string | null;
 }) {
+  const {
+    name,
+    githubProjectName,
+    homePage,
+    mediaList,
+    tagline,
+    description,
+    why,
+    tech,
+  } = projectData;
   const isMinimized = name !== expandedProject;
   const cardRef = useRef<HTMLElement>(null);
 
