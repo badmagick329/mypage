@@ -1,9 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
-const blinkInterval = 5000;
-const blinkJitter = 1500;
+import { useAvatar } from "@/hooks/home/useAvatar";
 
 export function Avatar({
   size = 100,
@@ -14,71 +11,17 @@ export function Avatar({
   className?: string;
   isHovering: boolean;
 }) {
-  const yOffset = 175;
-  const xOffset = 130;
-  const [isBlinking, setIsBlinking] = useState(false);
-  const svgRef = useRef<SVGSVGElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(false);
-
-  const calculatePupilPos = (eyeX: number, eyeY: number) => {
-    const dx = mousePos.x - xOffset;
-    const dy = mousePos.y - yOffset;
-    const mouseDistance = Math.sqrt(dx * dx + dy * dy);
-
-    const maxDistance = 2000;
-
-    if (mouseDistance > maxDistance) {
-      return { x: eyeX, y: eyeY };
-    }
-
-    const angle = Math.atan2(mousePos.y - eyeY, mousePos.x - eyeX);
-    const distance = 6;
-    return {
-      x: eyeX + Math.cos(angle) * distance,
-      y: eyeY + Math.sin(angle) * distance,
-    };
-  };
-
-  useEffect(() => {
-    const timeout = setTimeout(function blink() {
-      setIsBlinking(true);
-      setTimeout(() => setIsBlinking(false), 50);
-      setTimeout(blink, blinkInterval + Math.random() * blinkJitter);
-    });
-    return () => clearTimeout(timeout);
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!svgRef.current) return;
-
-      const svg = svgRef.current;
-      const rect = svg.getBoundingClientRect();
-
-      const clientX = e.clientX - rect.left;
-      const clientY = e.clientY - rect.top;
-
-      const viewBox = svg.viewBox.baseVal;
-      const scaleX = viewBox.width / rect.width;
-      const scaleY = viewBox.height / rect.height;
-
-      setMousePos({
-        x: clientX * scaleX + viewBox.x,
-        y: clientY * scaleY + viewBox.y,
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-  useEffect(() => {
-    if (isHovering && !isVisible) setIsVisible(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isHovering]);
-
-  const leftPupilPos = calculatePupilPos(xOffset - 30, yOffset - 10);
-  const rightPupilPos = calculatePupilPos(xOffset + 30, yOffset - 10);
+  const {
+    svgRef,
+    isBlinking,
+    isVisible,
+    setIsVisible,
+    leftPupilPos,
+    rightPupilPos,
+    stars,
+    xOffset,
+    yOffset,
+  } = useAvatar({ isHovering });
 
   return (
     <svg
@@ -219,19 +162,7 @@ export function Avatar({
         fill="currentColor"
       />
       {/* stars on hat */}
-      {[
-        { x: xOffset - 30, y: yOffset - 130 },
-        { x: xOffset + 40, y: yOffset - 130 },
-        { x: xOffset - 10, y: yOffset - 150 },
-        { x: xOffset + 20, y: yOffset - 140 },
-        { x: xOffset, y: yOffset - 110 },
-        { x: xOffset - 30, y: yOffset - 90 },
-        { x: xOffset - 38, y: yOffset - 110 },
-        { x: xOffset - 55, y: yOffset - 85 },
-        { x: xOffset + 55, y: yOffset - 85 },
-        { x: xOffset + 45, y: yOffset - 110 },
-        { x: xOffset + 10, y: yOffset - 80 },
-      ].map((star, i) => (
+      {stars.map((star, i) => (
         <circle
           key={i}
           cx={star.x}
