@@ -1,5 +1,29 @@
 import ProjectCard from "@/app/projects/_components/ProjectCard";
 import { projectsData } from "@/app/projects/_components/projects-data";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description:
+    "Explore my portfolio of web development projects including video encoding services, archive tools, Discord utilities, and more. Built with React, Next.js, TypeScript, Python, and Django.",
+  keywords: [
+    "web development projects",
+    "React projects",
+    "Next.js portfolio",
+    "TypeScript projects",
+    "full stack projects",
+    "software portfolio",
+  ],
+  openGraph: {
+    title: "Projects | Uzair",
+    description:
+      "Explore my portfolio of web development projects. Built with modern technologies like React, Next.js, TypeScript, and more.",
+    url: "/projects",
+  },
+  alternates: {
+    canonical: "/projects",
+  },
+};
 
 export default function Projects() {
   return (

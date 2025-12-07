@@ -3,6 +3,29 @@ import EmailIcon from "@/app/_components/svgs/EmailIcon";
 import GithubIcon from "@/app/_components/svgs/GithubIcon";
 import ContactForm from "@/app/contact/_components/ContactForm";
 import { ExternalLink } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Get in touch with me for collaboration, job opportunities, or just to say hello. Reach out via email, GitHub, or Discord.",
+  keywords: [
+    "contact developer",
+    "hire developer",
+    "web developer contact",
+    "freelance developer",
+    "collaboration",
+  ],
+  openGraph: {
+    title: "Contact | Uzair",
+    description:
+      "Want to work together? Get in touch via email, GitHub, or Discord.",
+    url: "/contact",
+  },
+  alternates: {
+    canonical: "/contact",
+  },
+};
 
 const EMAIL = process.env.NEXT_PUBLIC_EMAIL_ADDRESS;
 const DISCORD_USER = process.env.NEXT_PUBLIC_DISCORD_USER;
