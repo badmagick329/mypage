@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 export default function ThemeToggler() {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function ThemeToggler() {
 
   return (
     <div className="flex flex-col">
-      {theme === "dark" ? (
+      {resolvedTheme === "dark" ? (
         <button
           className="hover:cursor-pointer hover:text-amber-500"
           onClick={() => setTheme("light")}
