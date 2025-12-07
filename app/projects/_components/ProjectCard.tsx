@@ -3,8 +3,8 @@
 import { ProjectData } from "@/app/projects/_components/projects-data";
 import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 import ProjectMediaDisplay from "@/app/projects/_components/ProjectMediaDisplay";
+import { useRef, useEffect } from "react";
 
 const iconSize = "xs:w-4 xs:h-4 mt-1 h-3 w-3";
 
@@ -17,14 +17,29 @@ export default function ProjectCard({
   description,
   why,
   tech,
-}: ProjectData) {
-  const [isMinimized, setIsMinimized] = useState(true);
+  toggleExpansion,
+  expandedProject,
+}: ProjectData & {
+  toggleExpansion: (name: string) => void;
+  expandedProject: string | null;
+}) {
+  const isMinimized = name !== expandedProject;
+  const cardRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!isMinimized && cardRef.current) {
+      cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [isMinimized]);
 
   return (
-    <article className="bg-background-light shadow-card group -mt-1 flex w-full flex-col items-start gap-4 rounded-t-md first:mt-0 last:rounded-md sm:max-w-[80%] lg:max-w-[60%]">
+    <article
+      ref={cardRef}
+      className="bg-background-light shadow-card group -mt-1 flex w-full scroll-mt-20 flex-col items-start gap-4 rounded-t-md first:mt-0 last:rounded-md sm:max-w-[80%] lg:max-w-[60%]"
+    >
       <section
         className={`bg-background-lighter/60 relative flex w-full justify-between rounded-t-md px-2 py-6 select-none group-last:rounded-md hover:cursor-pointer`}
-        onClick={() => setIsMinimized((p) => !p)}
+        onClick={() => toggleExpansion(name)}
       >
         <Heading
           name={name}

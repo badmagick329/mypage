@@ -11,6 +11,7 @@ export default function ProjectsClientPage({
 }) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const allTags = [...new Set(projects.flatMap((p) => p.tags))].toSorted();
+  const [expandedProject, setExpandedProject] = useState<string | null>(null);
 
   const toggleTag = (tag: string) => {
     setSelectedTags((prev) => {
@@ -20,6 +21,9 @@ export default function ProjectsClientPage({
         return [...prev, tag];
       }
     });
+  };
+  const toggleExpansion = (projectName: string) => {
+    setExpandedProject((prev) => (prev === projectName ? null : projectName));
   };
 
   const filteredProjects = projects.filter((p) => {
@@ -51,6 +55,8 @@ export default function ProjectsClientPage({
               why={p.why}
               tech={p.tech}
               tags={p.tags}
+              toggleExpansion={toggleExpansion}
+              expandedProject={expandedProject}
             />
           ))}
         </div>
