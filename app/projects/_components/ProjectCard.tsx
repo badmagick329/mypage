@@ -26,6 +26,7 @@ export default function ProjectCard({
     description,
     why,
     tech,
+    createdAt,
   } = projectData;
   const isMinimized = name !== expandedProject;
   const cardRef = useRef<HTMLElement>(null);
@@ -45,6 +46,9 @@ export default function ProjectCard({
         className={`bg-background-lighter/60 relative flex w-full justify-between rounded-t-md px-2 py-6 select-none group-last:rounded-md hover:cursor-pointer`}
         onClick={() => toggleExpansion(name)}
       >
+        <span className="xs:text-xs text-foreground-muted text-2xs absolute top-1 right-2">
+          Created: {new Date(createdAt).toLocaleDateString()}
+        </span>
         <Heading
           name={name}
           homePage={homePage}

@@ -9,6 +9,7 @@ export type ProjectData = {
   why: string;
   tech: string[];
   tags: string[];
+  createdAt: number;
 };
 
 export type ProjectMedia = { url: string; text: string; type: string };
@@ -32,6 +33,7 @@ export const projectsData = [
     why: "AV1 video encoding can be slow. Workloads can keep your computer busy for hours and you can't do much while you're waiting for this process. This lets you send your workload to one or more remote machines where they will be processed in parallel, and the results will be sent back to your machine.",
     tech: ["React", "Typescript", "Docker", "FFmpeg"],
     tags: ["React", "Typescript", "Docker", "FFmpeg", "CLI App", "SQL"],
+    createdAt: Date.parse("2025-08-17T01:16:37Z"),
   },
   {
     name: "Red Velvet Gfy Archive",
@@ -80,6 +82,7 @@ export const projectsData = [
       "Web App",
       "SQL",
     ],
+    createdAt: Date.parse("2023-07-04T18:01:12Z"),
   },
   {
     name: "Discord Emotes and Stickers",
@@ -100,6 +103,7 @@ export const projectsData = [
     why: "When creating your own stickers or emotes for Discord, you often have to play a 'guess the frame size' game. This results in recreating the emote and sticker multiple times to get the right size. With this app, you can automate this tedious process.",
     tech: ["Next.js", "React", "Typescript", "FFmpeg", "Docker"],
     tags: ["Next.js", "React", "Typescript", "FFmpeg", "Docker", "Web App"],
+    createdAt: Date.parse("2023-07-04T18:01:12Z"),
   },
   {
     name: "Kpop Releases",
@@ -138,6 +142,7 @@ export const projectsData = [
       "Web App",
       "SQL",
     ],
+    createdAt: Date.parse("2023-07-04T18:01:12Z"),
   },
   {
     name: "Food Inventory Manager",
@@ -173,6 +178,7 @@ export const projectsData = [
       "SQL",
       "Web App",
     ],
+    createdAt: Date.parse("2023-10-15T18:05:09Z"),
   },
   {
     name: "Website for a copywriter",
@@ -186,6 +192,7 @@ export const projectsData = [
     why: "A copywriter wanted me to create a website that also includes a blog. A modern interface with easy-to-use customisation options that allow the owner to update and monitor the website and blog traffic.",
     tech: ["Next.js", "React", "Typescript", "Velite", "Docker"],
     tags: ["Next.js", "React", "Typescript", "Docker"],
+    createdAt: Date.parse("2024-04-30T21:23:31Z"),
   },
   {
     name: "Tetris in the Terminal",
@@ -205,6 +212,7 @@ export const projectsData = [
     why: "While learning Rust, I was listening to the title song for the movie about the creation of Tetris. So, I decided to build a Tetris game for the terminal, with the song playing in the background as you play. You can choose any mp3 you want as the soundtrack.",
     tech: ["Rust"],
     tags: ["Rust", "CLI App", "Game"],
+    createdAt: Date.parse("2023-04-26T23:24:16Z"),
   },
   {
     name: "Video Summariser",
@@ -224,6 +232,7 @@ export const projectsData = [
     why: "Nobody likes getting clickbaited. There are many summary tools available, including YouTube's integrated summariser. However, I've found most of those rather insufficient. So, I created a tool that would give users a more detailed yet concise summary to learn what a specific YouTube video was about. You can even ask follow-up questions.",
     tech: ["Python", "Gemini"],
     tags: ["Python", "AI"],
+    createdAt: Date.parse("2024-10-24T00:47:22Z"),
   },
   {
     name: "School Inventory and Sales Manager",
@@ -266,6 +275,7 @@ export const projectsData = [
       "Docker",
       "Web App",
     ],
+    createdAt: Date.parse("2024-01-25T20:51:03Z"),
   },
   {
     name: "Spotify Playlist Maker",
@@ -286,6 +296,7 @@ export const projectsData = [
     why: "People often use one or two giant playlists for all the songs they like on Spotify. While this is convenient, you lose the ability to filter songs by specific artists or release dates for a listening session. This lets you create playlists based on those filters, pulling songs only from your chosen playlists.",
     tech: ["C#"],
     tags: ["C#", "CLI App"],
+    createdAt: Date.parse("2024-12-23T19:22:49Z"),
   },
   {
     name: "Download Watcher",
@@ -305,6 +316,7 @@ export const projectsData = [
     why: "There's a lot of junk that piles up in your download folder. Some of it is used just once and can be removed after, while some of it needs to be moved elsewhere. This app automates the organisation and cleanup.",
     tech: ["C#"],
     tags: ["C#", "CLI App"],
+    createdAt: Date.parse("2024-10-01T18:47:43Z"),
   },
   {
     name: "Cublaster Game",
@@ -326,6 +338,7 @@ export const projectsData = [
     why: "Participated in a game jam with a friend and used the experience as an opportunity to learn Three.js.",
     tech: ["Javascript", "Three.js"],
     tags: ["Javascript", "Three.js", "Game", "Web App"],
+    createdAt: Date.parse("2024-07-21T12:24:24Z"),
   },
   {
     name: "Pomodoro in the Terminal",
@@ -349,6 +362,7 @@ export const projectsData = [
     why: "I was looking into the pomodoro method. I was also learning Go and this was a good excuse to make a CLI Go app.",
     tech: ["Go"],
     tags: ["Go", "CLI App"],
+    createdAt: Date.parse("2023-06-22T20:33:08Z"),
   },
   {
     name: "Advent of Code 2024",
@@ -360,6 +374,7 @@ export const projectsData = [
     why: "I was learning C#.",
     tech: ["C#"],
     tags: ["C#"],
+    createdAt: Date.parse("2024-12-01T19:05:17Z"),
   },
   {
     name: "Advent of Code 2023",
@@ -371,6 +386,7 @@ export const projectsData = [
     why: "I was learning Go.",
     tech: ["Go"],
     tags: ["Go"],
+    createdAt: Date.parse("2023-12-01T20:15:20Z"),
   },
   {
     name: "Ink Scrollable List",
@@ -390,5 +406,6 @@ export const projectsData = [
     why: "I needed a scrollable list component for the server-side terminal user interface of my remote ffmpeg service.",
     tech: ["React", "Typescript"],
     tags: ["React", "Typescript"],
+    createdAt: Date.parse("2025-10-21T15:19:26Z"),
   },
 ] as ProjectData[];
