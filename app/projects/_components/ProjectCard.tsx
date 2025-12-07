@@ -39,7 +39,7 @@ export default function ProjectCard({
         )}
       </section>
       {!isMinimized && (
-        <section>
+        <section className="w-full">
           <AdditionalDetail
             mediaList={mediaList}
             description={description}
