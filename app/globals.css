@@ -146,6 +146,9 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
+  --text-2xs: 0.625rem;
+  --text-2xs--line-height: 0.875rem;
+
   --shadow-card: var(--card-shadow);
   --shadow-welcome-card: var(--welcome-card-shadow);
   --shadow-glow-primary: var(--primary-glow);
