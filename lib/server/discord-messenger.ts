@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 
-const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 const DISCORD_MESSAGE_LIMIT = 2000;
 
 type DiscordEmbed = {
@@ -12,8 +11,19 @@ type DiscordEmbed = {
 const SERVICE_DOWN_MESSAGE =
   "It seems the service is currently unavailable. Please try again later or contact me via Email.";
 
-export function checkWebhookUrl(): { errorResponse?: NextResponse } {
-  if (!DISCORD_WEBHOOK_URL) {
+export function checkWebhookUrl(): {
+  errorResponse?: NextResponse;
+  webhookUrl?: string;
+} {
+  const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+  console.log("ENV CHECK - DISCORD_WEBHOOK_URL exists:", !!webhookUrl);
+  console.log(
+    "ENV CHECK - All env keys:",
+    Object.keys(process.env).filter(
+      (k) => k.includes("DISCORD") || k.includes("NODE"),
+    ),
+  );
+  if (!webhookUrl) {
     console.error("DISCORD_WEBHOOK_URL is not configured");
     return {
       errorResponse: NextResponse.json(
@@ -22,7 +32,7 @@ export function checkWebhookUrl(): { errorResponse?: NextResponse } {
       ),
     };
   }
-  return {};
+  return { webhookUrl };
 }
 
 export async function sendDiscordMessage({
@@ -38,7 +48,7 @@ export async function sendDiscordMessage({
   if (checkWebhookUrlResult.errorResponse) {
     return checkWebhookUrlResult;
   }
-  const webhookUrl = DISCORD_WEBHOOK_URL!;
+  const webhookUrl = checkWebhookUrlResult.webhookUrl!;
 
   try {
     const embed = createEmbed({ name, email });
