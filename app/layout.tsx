@@ -1,6 +1,6 @@
 import { ThemeProvider } from "next-themes";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Caveat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/app/_components/Navbar";
 import AnimatedBackground from "@/app/_components/AnimatedBackground";
@@ -12,6 +12,11 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const caveat = Caveat({
+  variable: "--font-caveat",
   subsets: ["latin"],
 });
 
@@ -83,7 +88,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased transition-all`}
+        className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} antialiased transition-all`}
       >
         <main className="flex min-h-screen flex-col items-center font-sans">
           <ThemeProvider attribute="class">

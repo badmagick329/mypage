@@ -15,7 +15,7 @@ export default function WelcomeMessage() {
       <section className="bg-welcome-card-header shadow-welcome-card flex flex-col items-center rounded-t-md py-2 text-center">
         <h3 className="text-foreground-strong text-3xl font-black">HELLO</h3>
         <div
-          className="flex w-fit justify-center gap-2 hover:cursor-pointer"
+          className="flex w-fit justify-center hover:cursor-pointer"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
@@ -46,6 +46,7 @@ export default function WelcomeMessage() {
 }
 
 function HandwrittenName({ isHovering }: { isHovering: boolean }) {
+  const fontSize = 56;
   return (
     <svg
       viewBox="0 0 180 60"
@@ -64,9 +65,8 @@ function HandwrittenName({ isHovering }: { isHovering: boolean }) {
         <text
           x="10"
           y="45"
-          fontSize="48"
-          fontFamily="cursive"
-          fontStyle="italic"
+          fontSize={fontSize}
+          style={{ fontFamily: "var(--font-caveat), cursive" }}
           fill="currentColor"
           className="text-foreground"
           transform="rotate(-2 25 45)"
@@ -76,9 +76,8 @@ function HandwrittenName({ isHovering }: { isHovering: boolean }) {
         <text
           x="40"
           y="48"
-          fontSize="48"
-          fontFamily="cursive"
-          fontStyle="italic"
+          fontSize={fontSize}
+          style={{ fontFamily: "var(--font-caveat), cursive" }}
           fill="currentColor"
           className="text-foreground"
           transform="rotate(1 55 48)"
@@ -88,9 +87,8 @@ function HandwrittenName({ isHovering }: { isHovering: boolean }) {
         <text
           x="65"
           y="46"
-          fontSize="48"
-          fontFamily="cursive"
-          fontStyle="italic"
+          fontSize={fontSize}
+          style={{ fontFamily: "var(--font-caveat), cursive" }}
           fill="currentColor"
           className="text-foreground"
           transform="rotate(-1.5 80 46)"
@@ -100,9 +98,8 @@ function HandwrittenName({ isHovering }: { isHovering: boolean }) {
         <text
           x="90"
           y="44"
-          fontSize="48"
-          fontFamily="cursive"
-          fontStyle="italic"
+          fontSize={fontSize}
+          style={{ fontFamily: "var(--font-caveat), cursive" }}
           fill="currentColor"
           className="text-foreground"
           transform="rotate(2 105 44)"
@@ -112,9 +109,8 @@ function HandwrittenName({ isHovering }: { isHovering: boolean }) {
         <text
           x="110"
           y="47"
-          fontSize="48"
-          fontFamily="cursive"
-          fontStyle="italic"
+          fontSize={fontSize}
+          style={{ fontFamily: "var(--font-caveat), cursive" }}
           fill="currentColor"
           className="text-foreground"
           transform="rotate(-0.5 125 47)"
@@ -124,9 +120,8 @@ function HandwrittenName({ isHovering }: { isHovering: boolean }) {
         <text
           x="135"
           y="45"
-          fontSize="48"
-          fontFamily="cursive"
-          fontStyle="italic"
+          fontSize={fontSize}
+          style={{ fontFamily: "var(--font-caveat), cursive" }}
           fill="currentColor"
           className="text-foreground"
           transform="rotate(1.5 150 45)"
