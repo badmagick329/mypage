@@ -58,6 +58,7 @@ export default function VideoPlayer({
         },
         autoplay,
         muted,
+        blankVideo: "/videos/blankvideo.mp4",
       });
     });
 
