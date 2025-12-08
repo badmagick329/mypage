@@ -197,6 +197,18 @@ export function Avatar({
         fill="none"
         strokeLinecap="round"
       />
+      {!isVisible && (
+        <ellipse
+          cx={xOffset}
+          cy={yOffset + 75}
+          rx="11"
+          ry="16"
+          fill="white"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          className="text-gray-800"
+        />
+      )}
     </svg>
   );
 }
