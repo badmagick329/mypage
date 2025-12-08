@@ -2,6 +2,7 @@
 import FilterBar from "@/app/projects/_components/FilterBar";
 import ProjectCard from "@/app/projects/_components/ProjectCard";
 import { type ProjectData } from "@/app/projects/_components/projects-data";
+import useProjectTags from "@/hooks/projects/useProjectTags";
 import { useState } from "react";
 
 export default function ProjectsClientPage({
@@ -9,28 +10,12 @@ export default function ProjectsClientPage({
 }: {
   projects: ProjectData[];
 }) {
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const allTags = [...new Set(projects.flatMap((p) => p.tags))].toSorted();
+  const { allTags, toggleTag, filteredProjects, selectedTags, tagsAndCount } =
+    useProjectTags(projects);
   const [expandedProject, setExpandedProject] = useState<string | null>(null);
-
-  const toggleTag = (tag: string) => {
-    setSelectedTags((prev) => {
-      if (prev.includes(tag)) {
-        return prev.filter((t) => t !== tag);
-      } else {
-        return [...prev, tag];
-      }
-    });
-  };
   const toggleExpansion = (projectName: string) => {
     setExpandedProject((prev) => (prev === projectName ? null : projectName));
   };
-
-  const filteredProjects = projects.filter((p) => {
-    return selectedTags.length === 0
-      ? true
-      : selectedTags.every((tag) => p.tags.includes(tag));
-  });
 
   return (
     <div className="flex w-full flex-col items-center px-2 pb-8">
@@ -41,6 +26,7 @@ export default function ProjectsClientPage({
             allTags={allTags}
             selectedTags={selectedTags}
             toggleTag={toggleTag}
+            tagsAndCount={tagsAndCount}
           />
           {filteredProjects.map((p) => (
             <ProjectCard
