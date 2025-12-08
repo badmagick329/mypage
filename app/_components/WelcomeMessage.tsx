@@ -36,7 +36,7 @@ export default function WelcomeMessage() {
         <p>
           Say hi to me on the{" "}
           <a href="/contact" className="font-semibold hover:underline">
-            contacts
+            contact
           </a>{" "}
           page
         </p>
