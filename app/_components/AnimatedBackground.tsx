@@ -22,7 +22,7 @@ export default function AnimatedBackground() {
   const animationRef = useRef<number>(0);
   const { resolvedTheme } = useTheme();
 
-  const opacityMultiplier = resolvedTheme === "light" ? 5.0 : 1;
+  const opacityMultiplier = resolvedTheme === "light" ? 5.0 : 2.5;
 
   useEffect(() => {
     const container = containerRef.current;

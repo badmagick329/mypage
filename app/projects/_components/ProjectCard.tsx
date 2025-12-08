@@ -30,8 +30,13 @@ export default function ProjectCard({
   } = projectData;
   const isMinimized = name !== expandedProject;
   const cardRef = useRef<HTMLElement>(null);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     if (!isMinimized && cardRef.current) {
       cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }

@@ -16,6 +16,49 @@ export type ProjectMedia = { url: string; text: string; type: string };
 
 export const projectsData = [
   {
+    name: "School Inventory and Sales Manager",
+    githubProjectName: "inventorymanager",
+    homePage: "https://inv.mgck.ink",
+    mediaList: [
+      {
+        url: "/videos/inventorymanager.mp4",
+        text: "",
+        type: "video/mp4",
+      },
+      {
+        url: "/videos/inventorymanager2.mp4",
+        text: "All actions are logged for admin review",
+        type: "video/mp4",
+      },
+    ],
+    description:
+      "An inventory and sales manager built for my family's schools.",
+    tagline: "Replacing paper workflows with a custom solution",
+    shortDescription:
+      "A custom inventory and sales system built to replace error-prone paper-based workflows for schools.",
+    why: "My family's private schools relied on a paper-based, highly error-prone system to manage combined inventories and sales across their schools. I solved the issue with an app that would mirror the existing workflow in a digital, secure environment. The app also introduced safeguards against incorrect data entries. App features different admin permissions to maintain control and can monitor sales amounts and total revenue, as well as inventory sizes for different products. It also logs every action taken by the users for admins to review later.",
+    tech: [
+      "Next.js",
+      "React",
+      "Typescript",
+      "Django",
+      "Python",
+      "Postgres",
+      "Docker",
+    ],
+    tags: [
+      "Next.js",
+      "React",
+      "Typescript",
+      "Django",
+      "Python",
+      "Postgres",
+      "Docker",
+      "Web App",
+    ],
+    createdAt: Date.parse("2024-01-25T20:51:03Z"),
+  },
+  {
     name: "Remote Video Encoding Service",
     githubProjectName: "ffmpeg_service",
     description:
@@ -34,6 +77,41 @@ export const projectsData = [
     tech: ["React", "Typescript", "Docker", "FFmpeg"],
     tags: ["React", "Typescript", "Docker", "FFmpeg", "CLI App", "SQL"],
     createdAt: Date.parse("2025-08-17T01:16:37Z"),
+  },
+  {
+    name: "Discord Emotes and Stickers",
+    githubProjectName: "mgck",
+    homePage: "https://mgck.ink/discordgifs",
+    description:
+      "Create emotes and stickers for Discord from your video clips, complying with Discord's size limits.",
+    mediaList: [
+      {
+        url: "/videos/discordgifs.mp4",
+        text: "",
+        type: "video/mp4",
+      },
+    ],
+    tagline: "Create Discord emotes without the size limit guesswork",
+    shortDescription:
+      "Turn video clips into Discord-ready emotes and stickers, automatically optimized to meet file size limits.",
+    why: "When creating your own stickers or emotes for Discord, you often have to play a 'guess the frame size' game. This results in recreating the emote and sticker multiple times to get the right size. With this app, you can automate this tedious process.",
+    tech: ["Next.js", "React", "Typescript", "FFmpeg", "Docker"],
+    tags: ["Next.js", "React", "Typescript", "FFmpeg", "Docker", "Web App"],
+    createdAt: Date.parse("2023-07-04T18:01:12Z"),
+  },
+  {
+    name: "Website for a copywriter",
+    githubProjectName: "blog",
+    description:
+      "A professional website with an integrated blog, built for a freelance copywriter.",
+    homePage: "https://kristalomu.com",
+    tagline: "A website for a copywriter",
+    shortDescription:
+      "A professional website with an integrated blog, built for a freelance copywriter.",
+    why: "A copywriter wanted me to create a website that also includes a blog. A modern interface with easy-to-use customisation options that allow the owner to update and monitor the website and blog traffic.",
+    tech: ["Next.js", "React", "Typescript", "Velite", "Docker"],
+    tags: ["Next.js", "React", "Typescript", "Docker"],
+    createdAt: Date.parse("2024-04-30T21:23:31Z"),
   },
   {
     name: "Red Velvet Gfy Archive",
@@ -85,25 +163,60 @@ export const projectsData = [
     createdAt: Date.parse("2023-07-04T18:01:12Z"),
   },
   {
-    name: "Discord Emotes and Stickers",
-    githubProjectName: "mgck",
-    homePage: "https://mgck.ink/discordgifs",
-    description:
-      "Create emotes and stickers for Discord from your video clips, complying with Discord's size limits.",
+    name: "Tetris in the Terminal",
+    githubProjectName: "tetris",
+    description: "A tetris clone in the terminal, written in Rust 🦀",
     mediaList: [
       {
-        url: "/videos/discordgifs.mp4",
+        url: "/videos/clitetris.mp4",
         text: "",
         type: "video/mp4",
       },
     ],
-    tagline: "Create Discord emotes without the size limit guesswork",
+
+    tagline: "Classic Tetris, reimagined for the terminal",
     shortDescription:
-      "Turn video clips into Discord-ready emotes and stickers, automatically optimized to meet file size limits.",
-    why: "When creating your own stickers or emotes for Discord, you often have to play a 'guess the frame size' game. This results in recreating the emote and sticker multiple times to get the right size. With this app, you can automate this tedious process.",
-    tech: ["Next.js", "React", "Typescript", "FFmpeg", "Docker"],
-    tags: ["Next.js", "React", "Typescript", "FFmpeg", "Docker", "Web App"],
-    createdAt: Date.parse("2023-07-04T18:01:12Z"),
+      "A fully playable Tetris clone built in Rust for the command line.",
+    why: "While learning Rust, I was listening to the title song for the movie about the creation of Tetris. So, I decided to build a Tetris game for the terminal, with the song playing in the background as you play. You can choose any mp3 you want as the soundtrack.",
+    tech: ["Rust"],
+    tags: ["Rust", "CLI App", "Game"],
+    createdAt: Date.parse("2023-04-26T23:24:16Z"),
+  },
+  {
+    name: "Food Inventory Manager",
+    githubProjectName: "foodinventorymanager",
+    description:
+      "A food inventory management app. It features automated receipt parsing and a conversational AI assistant accessible via Discord.",
+    mediaList: [
+      {
+        url: "/videos/foodinventory.mp4",
+        text: "Web app with receipt parsing",
+        type: "video/mp4",
+      },
+      {
+        url: "/videos/foodinventory2.mp4",
+        text: "Conversational agent",
+        type: "video/mp4",
+      },
+    ],
+    tagline: "Pantry tracking with receipt parsing and an AI chatbot",
+    shortDescription:
+      "Manage household food inventory with automated receipt parsing and a conversational Discord assistant.",
+    why: "Keeping track of everything in your pantry can be a challenge, especially when it comes to use-by dates. This app makes it easy to view the content of your fridge, freezer and pantry, no matter where you are. Best-by dates help you reduce food waste, and the displayed quantities ensure you only buy the amount you need during your weekly shop. You can also input your Ocado PDF-receipts for home deliveries to avoid having to manually enter each item. An AI chatbot is also available through discord which makes it easier to query the app and even remove items as you're cooking.",
+    tech: ["Next.js", "React", "Typescript", "Postgres", "Gemini", "Docker"],
+    tags: [
+      "Next.js",
+      "React",
+      "Typescript",
+      "AI",
+      "Docker",
+      "BullMQ",
+      "Web App",
+      "Postgres",
+      "SQL",
+      "Web App",
+    ],
+    createdAt: Date.parse("2023-10-15T18:05:09Z"),
   },
   {
     name: "Kpop Releases",
@@ -145,76 +258,6 @@ export const projectsData = [
     createdAt: Date.parse("2023-07-04T18:01:12Z"),
   },
   {
-    name: "Food Inventory Manager",
-    githubProjectName: "foodinventorymanager",
-    description:
-      "A food inventory management app. It features automated receipt parsing and a conversational AI assistant accessible via Discord.",
-    mediaList: [
-      {
-        url: "/videos/foodinventory.mp4",
-        text: "Web app with receipt parsing",
-        type: "video/mp4",
-      },
-      {
-        url: "/videos/foodinventory2.mp4",
-        text: "Conversational agent",
-        type: "video/mp4",
-      },
-    ],
-    tagline: "Pantry tracking with receipt parsing and an AI chatbot",
-    shortDescription:
-      "Manage household food inventory with automated receipt parsing and a conversational Discord assistant.",
-    why: "Keeping track of everything in your pantry can be a challenge, especially when it comes to use-by dates. This app makes it easy to view the content of your fridge, freezer and pantry, no matter where you are. Best-by dates help you reduce food waste, and the displayed quantities ensure you only buy the amount you need during your weekly shop. You can also input your Ocado PDF-receipts for home deliveries to avoid having to manually enter each item. An AI chatbot is also available through discord which makes it easier to query the app and even remove items as you're cooking.",
-    tech: ["Next.js", "React", "Typescript", "Postgres", "Gemini", "Docker"],
-    tags: [
-      "Next.js",
-      "React",
-      "Typescript",
-      "AI",
-      "Docker",
-      "BullMQ",
-      "Web App",
-      "Postgres",
-      "SQL",
-      "Web App",
-    ],
-    createdAt: Date.parse("2023-10-15T18:05:09Z"),
-  },
-  {
-    name: "Website for a copywriter",
-    githubProjectName: "blog",
-    description:
-      "A professional website with an integrated blog, built for a freelance copywriter.",
-    homePage: "https://kristalomu.com",
-    tagline: "A website for a copywriter",
-    shortDescription:
-      "A professional website with an integrated blog, built for a freelance copywriter.",
-    why: "A copywriter wanted me to create a website that also includes a blog. A modern interface with easy-to-use customisation options that allow the owner to update and monitor the website and blog traffic.",
-    tech: ["Next.js", "React", "Typescript", "Velite", "Docker"],
-    tags: ["Next.js", "React", "Typescript", "Docker"],
-    createdAt: Date.parse("2024-04-30T21:23:31Z"),
-  },
-  {
-    name: "Tetris in the Terminal",
-    githubProjectName: "tetris",
-    description: "A tetris clone in the terminal, written in Rust 🦀",
-    mediaList: [
-      {
-        url: "/videos/clitetris.mp4",
-        text: "",
-        type: "video/mp4",
-      },
-    ],
-
-    tagline: "Classic Tetris, reimagined for the terminal",
-    shortDescription:
-      "A fully playable Tetris clone built in Rust for the command line.",
-    why: "While learning Rust, I was listening to the title song for the movie about the creation of Tetris. So, I decided to build a Tetris game for the terminal, with the song playing in the background as you play. You can choose any mp3 you want as the soundtrack.",
-    tech: ["Rust"],
-    tags: ["Rust", "CLI App", "Game"],
-    createdAt: Date.parse("2023-04-26T23:24:16Z"),
-  },
-  {
     name: "Video Summariser",
     githubProjectName: "gemini_summariser",
     description:
@@ -233,49 +276,6 @@ export const projectsData = [
     tech: ["Python", "Gemini"],
     tags: ["Python", "AI"],
     createdAt: Date.parse("2024-10-24T00:47:22Z"),
-  },
-  {
-    name: "School Inventory and Sales Manager",
-    githubProjectName: "inventorymanager",
-    homePage: "https://inv.mgck.ink",
-    mediaList: [
-      {
-        url: "/videos/inventorymanager.mp4",
-        text: "",
-        type: "video/mp4",
-      },
-      {
-        url: "/videos/inventorymanager2.mp4",
-        text: "All actions are logged for admin review",
-        type: "video/mp4",
-      },
-    ],
-    description:
-      "An inventory and sales manager built for my family's schools.",
-    tagline: "Replacing paper workflows with a custom solution",
-    shortDescription:
-      "A custom inventory and sales system built to replace error-prone paper-based workflows for schools.",
-    why: "My family's private schools relied on a paper-based, highly error-prone system to manage combined inventories and sales across their schools. I solved the issue with an app that would mirror the existing workflow in a digital, secure environment. The app also introduced safeguards against incorrect data entries. App features different admin permissions to maintain control and can monitor sales amounts and total revenue, as well as inventory sizes for different products. It also logs every action taken by the users for admins to review later.",
-    tech: [
-      "Next.js",
-      "React",
-      "Typescript",
-      "Django",
-      "Python",
-      "Postgres",
-      "Docker",
-    ],
-    tags: [
-      "Next.js",
-      "React",
-      "Typescript",
-      "Django",
-      "Python",
-      "Postgres",
-      "Docker",
-      "Web App",
-    ],
-    createdAt: Date.parse("2024-01-25T20:51:03Z"),
   },
   {
     name: "Spotify Playlist Maker",

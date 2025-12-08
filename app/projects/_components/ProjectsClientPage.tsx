@@ -33,7 +33,7 @@ export default function ProjectsClientPage({
   });
 
   return (
-    <div className="flex w-full flex-col items-center px-2">
+    <div className="flex w-full flex-col items-center px-2 pb-8">
       <div className="container">
         <h1 className="my-8 text-center text-3xl font-black">Projects</h1>
         <div className="flex flex-col items-center">
