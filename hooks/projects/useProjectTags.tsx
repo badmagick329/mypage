@@ -23,7 +23,10 @@ export default function useProjectTags(
     });
   }, [projects, selectedTags]);
 
-  const allTags = [...new Set(projects.flatMap((p) => p.tags))].toSorted();
+  const allTags = useMemo(
+    () => [...new Set(projects.flatMap((p) => p.tags))].toSorted(),
+    [projects],
+  );
 
   const tagsAndCount = useMemo(() => {
     const tagsAndCount = new Map<string, number>();

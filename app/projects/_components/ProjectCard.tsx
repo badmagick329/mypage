@@ -49,11 +49,12 @@ export default function ProjectCard({
       className="bg-background-light shadow-card group -mt-1 flex w-full scroll-mt-20 flex-col items-start gap-4 rounded-t-md first:mt-0 last:rounded-md sm:max-w-[80%] lg:max-w-[60%]"
     >
       <section
-        className={`bg-background-lighter/60 relative flex w-full justify-between rounded-t-md px-2 py-6 select-none group-last:rounded-md hover:cursor-pointer`}
+        className="bg-background-lighter/60 relative flex w-full justify-between rounded-t-md px-2 py-6 select-none group-last:rounded-md hover:cursor-pointer"
         onClick={() => toggleExpansion(name)}
       >
         <span className="xs:text-xs text-foreground-muted text-2xs absolute top-1 right-2">
-          Created: {new Date(createdAt).toLocaleDateString()}
+          Created:{" "}
+          {new Date(createdAt).toLocaleDateString("en-GB", { timeZone: "UTC" })}
         </span>
         <Heading
           name={name}

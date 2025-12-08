@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "plyr/dist/plyr.css";
 
 interface VideoPlayerProps {
@@ -20,9 +20,14 @@ export default function VideoPlayer({
   muted = false,
 }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (!videoRef.current) return;
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted || !videoRef.current) return;
 
     let player: import("plyr").default | null = null;
 
@@ -59,7 +64,15 @@ export default function VideoPlayer({
     return () => {
       player?.destroy();
     };
-  }, [autoplay, muted]);
+  }, [autoplay, muted, isMounted]);
+
+  if (!isMounted) {
+    return (
+      <div className="overflow-hidden rounded-md">
+        <div className="bg-background-lighter aspect-video w-full animate-pulse" />
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-hidden rounded-md">
@@ -70,7 +83,7 @@ export default function VideoPlayer({
         data-poster={`${src}-poster.webp`}
         title={title}
       >
-        <source src={src} type={type} />
+        <source src={src} type={type === "" ? "video/mp4" : type} />
         Your browser does not support HTML5 video.
       </video>
     </div>

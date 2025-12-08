@@ -30,7 +30,7 @@ export default function ProjectMediaDisplay({
         {m.type.startsWith("video") ? (
           <div className="flex flex-col items-center gap-1 text-center">
             <VideoPlayer src={m.url} />
-            {m.text && (
+            {m.text.length > 0 && (
               <span className="mt-1 text-xs sm:text-sm">{m.text}</span>
             )}
           </div>
@@ -52,7 +52,7 @@ export default function ProjectMediaDisplay({
                     {current} of {count}
                   </span>
                 )}
-                {m.text && (
+                {m.text.length > 0 && (
                   <span className="mt-1 text-xs sm:text-sm">{m.text}</span>
                 )}
               </div>
