@@ -365,6 +365,17 @@ export const projectsData = [
     createdAt: Date.parse("2023-06-22T20:33:08Z"),
   },
   {
+    name: "This Page",
+    githubProjectName: "mypage",
+    description: "My personal website and portfolio",
+    tagline: "My personal website and portfolio",
+    shortDescription: "My personal website and portfolio",
+    why: "I did not have a personal website.",
+    tech: ["Next.js", "React", "Typescript"],
+    tags: ["Next.js", "React", "Typescript", "Web App"],
+    createdAt: Date.parse("2025-12-01T23:12:25Z"),
+  },
+  {
     name: "Advent of Code 2024",
     githubProjectName: "advent-of-code-2024",
     description: "Advent of code challenges for 2024.",
