@@ -24,7 +24,7 @@ export default function useProjectTags(
   }, [projects, selectedTags]);
 
   const allTags = useMemo(
-    () => [...new Set(projects.flatMap((p) => p.tags))].toSorted(),
+    () => [...new Set(projects.flatMap((p) => p.tags))].sort(),
     [projects],
   );
 
