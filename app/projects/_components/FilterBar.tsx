@@ -28,7 +28,7 @@ export default function FilterBar({
               key={tag}
               disabled={isDisabled}
               onClick={() => toggleTag(tag)}
-              className={`m-1 rounded-full px-3 py-1 text-sm font-semibold ${buttonStyling}`}
+              className={`m-1 rounded-full px-3 py-1 text-xs font-semibold sm:text-sm ${buttonStyling}`}
             >
               {tag} {countText}
             </button>
