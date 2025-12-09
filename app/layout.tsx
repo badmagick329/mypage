@@ -23,8 +23,8 @@ const caveat = Caveat({
 export const metadata: Metadata = {
   metadataBase: new URL("https://hello.mgck.ink"),
   title: {
-    default: "Uzair | Full Stack Developer",
-    template: "%s | Uzair",
+    default: "Uzair Farooqi | Full Stack Developer",
+    template: "%s | Uzair Farooqi",
   },
   description:
     "Full stack developer specialising in web applications. Building modern, responsive solutions with React, Next.js, TypeScript, and more.",
@@ -38,14 +38,14 @@ export const metadata: Metadata = {
     "portfolio",
     "web applications",
   ],
-  authors: [{ name: "Uzair" }],
-  creator: "Uzair",
+  authors: [{ name: "Uzair Farooqi" }],
+  creator: "Uzair Farooqi",
   openGraph: {
     type: "website",
     locale: "en_GB",
     url: "https://hello.mgck.ink",
-    siteName: "Uzair | Portfolio",
-    title: "Uzair | Full Stack Developer",
+    siteName: "Uzair Farooqi | Portfolio",
+    title: "Uzair Farooqi | Full Stack Developer",
     description:
       "Full stack developer specialising in web applications. Explore my projects and get in touch.",
     images: [
@@ -53,13 +53,13 @@ export const metadata: Metadata = {
         url: "/wand.png",
         width: 1200,
         height: 630,
-        alt: "Uzair - Full Stack Developer Portfolio",
+        alt: "Uzair Farooqi - Full Stack Developer Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Uzair | Full Stack Developer",
+    title: "Uzair Farooqi | Full Stack Developer",
     description:
       "Full stack developer specialising in web applications. Explore my projects and get in touch.",
     images: ["/wand.png"],

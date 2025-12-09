@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     "collaboration",
   ],
   openGraph: {
-    title: "Contact | Uzair",
+    title: "Contact | Uzair Farooqi",
     description: "Want to work together? Get in touch.",
     url: "/contact",
   },

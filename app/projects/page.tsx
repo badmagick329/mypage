@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "programmer portfolio",
   ],
   openGraph: {
-    title: "Projects | Uzair",
+    title: "Projects | Uzair Farooqi",
     description:
       "Explore my portfolio of web development projects. Built with modern technologies like React, Next.js, TypeScript, and more.",
     url: "/projects",

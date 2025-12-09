@@ -25,7 +25,7 @@ export default function WelcomeMessage() {
       </section>
       <section className="p-4">
         <p>
-          I like solving problems by building software. I primarily work on web
+          I&apos;m a London based software developer and I primarily work on web
           apps. Please feel free to look through some of my{" "}
           <a href="/projects" className="font-semibold hover:underline">
             projects
@@ -65,13 +65,13 @@ function HandwrittenName({ isHovering }: { isHovering: boolean }) {
         <text
           x="10"
           y="45"
-          fontSize={fontSize}
+          fontSize={fontSize - 6}
           style={{ fontFamily: "var(--font-caveat), cursive" }}
           fill="currentColor"
           className="text-foreground"
           transform="rotate(-2 25 45)"
         >
-          m
+          U
         </text>
         <text
           x="40"
@@ -82,7 +82,7 @@ function HandwrittenName({ isHovering }: { isHovering: boolean }) {
           className="text-foreground"
           transform="rotate(1 55 48)"
         >
-          a
+          z
         </text>
         <text
           x="65"
@@ -93,7 +93,7 @@ function HandwrittenName({ isHovering }: { isHovering: boolean }) {
           className="text-foreground"
           transform="rotate(-1.5 80 46)"
         >
-          g
+          a
         </text>
         <text
           x="90"
@@ -115,18 +115,7 @@ function HandwrittenName({ isHovering }: { isHovering: boolean }) {
           className="text-foreground"
           transform="rotate(-0.5 125 47)"
         >
-          c
-        </text>
-        <text
-          x="135"
-          y="45"
-          fontSize={fontSize}
-          style={{ fontFamily: "var(--font-caveat), cursive" }}
-          fill="currentColor"
-          className="text-foreground"
-          transform="rotate(1.5 150 45)"
-        >
-          k
+          r
         </text>
       </g>
     </svg>

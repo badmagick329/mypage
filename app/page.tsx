@@ -2,7 +2,7 @@ import WelcomeMessage from "@/app/_components/WelcomeMessage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Home | Uzair",
+  title: "Home | Uzair Farooqi",
   description:
     "Welcome to my portfolio. I'm a full stack developer who loves solving problems by building software, primarily web applications.",
   keywords: [
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "portfolio",
   ],
   openGraph: {
-    title: "Uzair | Full Stack Developer",
+    title: "Uzair Farooqi | Full Stack Developer",
     description:
       "Welcome to my portfolio. I'm a full stack developer who loves solving problems by building software, primarily web applications.",
     url: "/",

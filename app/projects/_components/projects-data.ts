@@ -398,6 +398,7 @@ export const projectsData = [
   },
   {
     name: "This Page",
+    homePage: "https://hello.mgck.ink",
     githubProjectName: "mypage",
     description: "My personal website and portfolio",
     tagline: "My personal website and portfolio",
