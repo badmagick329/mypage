@@ -5,9 +5,6 @@ import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import ProjectMediaDisplay from "@/app/projects/_components/ProjectMediaDisplay";
 import { useRef, useEffect } from "react";
-import ReactIcon from "@/app/_components/svgs/ReactIcon";
-import PythonIcon from "@/app/_components/svgs/PythonIcon";
-import TypescriptIcon from "@/app/_components/svgs/TypescriptIcon";
 import TechIcons from "@/app/projects/_components/TechIcons";
 
 const iconSize = "xs:w-4 xs:h-4 mt-1 h-3 w-3";
@@ -45,8 +42,6 @@ export default function ProjectCard({
       cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [isMinimized]);
-  const size = 4;
-  const iconSize = `w-${size} h-${size}`;
 
   return (
     <article
