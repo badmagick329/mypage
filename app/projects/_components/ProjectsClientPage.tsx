@@ -27,6 +27,8 @@ export default function ProjectsClientPage({
             selectedTags={selectedTags}
             toggleTag={toggleTag}
             tagsAndCount={tagsAndCount}
+            allProjectsCount={projects.length}
+            filteredProjectsCount={filteredProjects.length}
           />
           {filteredProjects.map((p) => (
             <ProjectCard
