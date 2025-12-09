@@ -5,6 +5,10 @@ import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import ProjectMediaDisplay from "@/app/projects/_components/ProjectMediaDisplay";
 import { useRef, useEffect } from "react";
+import ReactIcon from "@/app/_components/svgs/ReactIcon";
+import PythonIcon from "@/app/_components/svgs/PythonIcon";
+import TypescriptIcon from "@/app/_components/svgs/TypescriptIcon";
+import TechIcons from "@/app/projects/_components/TechIcons";
 
 const iconSize = "xs:w-4 xs:h-4 mt-1 h-3 w-3";
 
@@ -41,6 +45,8 @@ export default function ProjectCard({
       cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [isMinimized]);
+  const size = 4;
+  const iconSize = `w-${size} h-${size}`;
 
   return (
     <article
@@ -49,13 +55,16 @@ export default function ProjectCard({
       className="bg-background-light shadow-card group -mt-1 flex w-full scroll-mt-20 flex-col items-start gap-4 rounded-t-md first:mt-0 last:rounded-md sm:max-w-[80%] lg:max-w-[60%]"
     >
       <section
-        className="bg-background-lighter/60 relative flex w-full justify-between rounded-t-md px-2 py-6 select-none group-last:rounded-md hover:cursor-pointer"
+        className="bg-background-lighter/60 relative flex w-full justify-between rounded-t-md px-2 pt-8 pb-6 select-none group-last:rounded-md hover:cursor-pointer"
         onClick={() => toggleExpansion(name)}
       >
         <span className="xs:text-xs text-foreground-muted text-2xs absolute top-1 right-2">
           Created:{" "}
           {new Date(createdAt).toLocaleDateString("en-GB", { timeZone: "UTC" })}
         </span>
+        <div className="absolute top-1 left-2 flex gap-2">
+          <TechIcons tech={tech} />
+        </div>
         <Heading
           name={name}
           homePage={homePage}
@@ -94,7 +103,7 @@ function Heading({
 }) {
   if (!homePage) {
     return (
-      <div className="flex flex-col gap-2">
+      <div className="relative flex flex-col gap-2">
         <h3 className="xs:text-xl text-base font-semibold">{name}</h3>
         {isMinimized && (
           <span className="text-foreground-muted">{tagline}</span>

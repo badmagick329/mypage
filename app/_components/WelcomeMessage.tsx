@@ -38,7 +38,7 @@ export default function WelcomeMessage() {
           <a href="/contact" className="font-semibold hover:underline">
             contact
           </a>{" "}
-          page
+          page.
         </p>
       </section>
     </article>
