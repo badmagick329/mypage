@@ -4,6 +4,7 @@ import { Geist, Geist_Mono, Caveat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/app/_components/Navbar";
 import AnimatedBackground from "@/app/_components/AnimatedBackground";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -87,6 +88,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script
+          src="/ingest/js/script.js"
+          data-domain="hello.mgck.ink"
+          data-api="/ingest/api/event"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} antialiased transition-all`}
       >
