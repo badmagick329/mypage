@@ -22,7 +22,7 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="shadow-card bg-background-light rounded-md px-2 py-6 sm:px-4 md:px-6">
+    <div className="shadow-card bg-background-light rounded-md px-4 py-6 md:px-6">
       <h3 className="mb-8 text-2xl font-semibold">Or send me a message</h3>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
