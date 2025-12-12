@@ -1,14 +1,14 @@
 "use client";
 import FilterBar from "@/app/projects/_components/FilterBar";
 import ProjectCard from "@/app/projects/_components/ProjectCard";
-import { type ProjectData } from "@/app/projects/_components/projects-data";
 import useProjectTags from "@/hooks/projects/useProjectTags";
+import { ProjectDataWithUpdatedAt } from "@/lib/types";
 import { useState } from "react";
 
 export default function ProjectsClientPage({
   projects,
 }: {
-  projects: ProjectData[];
+  projects: ProjectDataWithUpdatedAt[];
 }) {
   const { allTags, toggleTag, filteredProjects, selectedTags, tagsAndCount } =
     useProjectTags(projects);

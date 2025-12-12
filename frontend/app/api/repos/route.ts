@@ -1,14 +1,11 @@
 import { serverConfig } from "@/lib/server/config";
-import { GitHubRepository } from "@/lib/types";
+import { GitHubRepository, ReposResponse, RepoSummary } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 import * as fs from "node:fs";
 
-type RepoSummary = {
-  name: string;
-  updatedAt: string;
-};
-
-export async function GET(request: NextRequest) {
+export async function GET(
+  request: NextRequest,
+): Promise<NextResponse<ReposResponse>> {
   const dataDir = getDataDir();
   if (!dataDir) {
     return NextResponse.json<{ error: string }>(

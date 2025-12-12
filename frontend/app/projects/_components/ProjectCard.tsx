@@ -1,11 +1,14 @@
 "use client";
 
-import { ProjectData } from "@/app/projects/_components/projects-data";
 import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import ProjectMediaDisplay from "@/app/projects/_components/ProjectMediaDisplay";
 import { useRef, useEffect } from "react";
 import TechIcons from "@/app/projects/_components/TechIcons";
+import { ProjectDataWithUpdatedAt } from "@/lib/types";
+import { JetBrains_Mono } from "next/font/google";
+
+const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
 
 const iconSize = "xs:w-4 xs:h-4 mt-1 h-3 w-3";
 
@@ -14,7 +17,7 @@ export default function ProjectCard({
   toggleExpansion,
   expandedProject,
 }: {
-  projectData: ProjectData;
+  projectData: ProjectDataWithUpdatedAt;
   toggleExpansion: (name: string) => void;
   expandedProject: string | null;
 }) {
@@ -28,6 +31,7 @@ export default function ProjectCard({
     why,
     tech,
     createdAt,
+    updatedAt,
   } = projectData;
   const isMinimized = name !== expandedProject;
   const cardRef = useRef<HTMLElement>(null);
@@ -53,10 +57,24 @@ export default function ProjectCard({
         className="bg-background-lighter/60 relative flex w-full justify-between rounded-t-md px-2 pt-8 pb-6 select-none group-last:rounded-md hover:cursor-pointer"
         onClick={() => toggleExpansion(name)}
       >
-        <span className="xs:text-xs text-foreground-muted text-2xs absolute top-1 right-2">
-          Created:{" "}
-          {new Date(createdAt).toLocaleDateString("en-GB", { timeZone: "UTC" })}
-        </span>
+        <div
+          className={`xs:text-2xs text-foreground-muted text-3xs absolute top-1 right-2 ${jetbrainsMono.className}`}
+        >
+          <div className="flex flex-col">
+            <span>
+              Created:{" "}
+              {new Date(createdAt).toLocaleDateString("en-GB", {
+                timeZone: "UTC",
+              })}
+            </span>
+            <span>
+              Updated:{" "}
+              {new Date(updatedAt).toLocaleDateString("en-GB", {
+                timeZone: "UTC",
+              })}
+            </span>
+          </div>
+        </div>
         <div className="absolute top-1 left-2 flex gap-2">
           <TechIcons tech={tech} />
         </div>
@@ -93,7 +111,10 @@ function Heading({
   homePage,
   tagline,
   isMinimized,
-}: Pick<ProjectData, "name" | "homePage" | "mediaList" | "tagline"> & {
+}: Pick<
+  ProjectDataWithUpdatedAt,
+  "name" | "homePage" | "mediaList" | "tagline"
+> & {
   isMinimized: boolean;
 }) {
   if (!homePage) {
@@ -130,7 +151,7 @@ function AdditionalDetail({
   githubProjectName,
   isMinimized,
 }: Pick<
-  ProjectData,
+  ProjectDataWithUpdatedAt,
   "description" | "why" | "tech" | "githubProjectName" | "mediaList"
 > & { isMinimized: boolean }) {
   return (

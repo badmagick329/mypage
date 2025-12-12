@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CONTACT } from "@/lib/urls";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
@@ -130,7 +131,7 @@ async function sendMessageRequest({
   };
 
   try {
-    const response = await fetch("/api/contact", {
+    const response = await fetch(CONTACT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

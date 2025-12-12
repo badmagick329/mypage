@@ -151,6 +151,8 @@
 
   --text-2xs: 0.625rem;
   --text-2xs--line-height: 0.875rem;
+  --text-3xs: 0.5rem;
+  --text-3xs--line-height: 0.75rem;
 
   --shadow-card: var(--card-shadow);
   --shadow-welcome-card: var(--welcome-card-shadow);

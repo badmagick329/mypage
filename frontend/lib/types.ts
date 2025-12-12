@@ -1,3 +1,5 @@
+import { ProjectData } from "@/app/projects/_components/projects-data";
+
 export type GitHubRepository = {
   id: number;
   node_id: string;
@@ -111,4 +113,15 @@ export type GitHubRepository = {
     triage: boolean;
     pull: boolean;
   };
+};
+
+export type RepoSummary = {
+  name: string;
+  updatedAt: string;
+};
+
+export type ReposResponse = RepoSummary[] | { error: string };
+
+export type ProjectDataWithUpdatedAt = ProjectData & {
+  updatedAt: string;
 };
