@@ -49,6 +49,7 @@ async function getRawData(): Promise<
         serverConfig.repoListCacheDuration
     ) {
       const result = await updateCache();
+
       if (result?.data) {
         return {
           ok: true,

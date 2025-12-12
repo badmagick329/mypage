@@ -54,41 +54,17 @@ export default function ProjectCard({
       className="bg-background-light shadow-card group -mt-1 flex w-full scroll-mt-20 flex-col items-start gap-4 rounded-t-md first:mt-0 last:rounded-md sm:max-w-[80%] lg:max-w-[60%]"
     >
       <section
-        className="bg-background-lighter/60 relative flex w-full justify-between rounded-t-md px-2 pt-8 pb-6 select-none group-last:rounded-md hover:cursor-pointer"
+        className="mt-1 flex w-full flex-col hover:cursor-pointer"
         onClick={() => toggleExpansion(name)}
       >
-        <div
-          className={`xs:text-2xs text-foreground-muted text-3xs absolute top-1 right-2 ${jetbrainsMono.className}`}
-        >
-          <div className="flex flex-col">
-            <span>
-              Created:{" "}
-              {new Date(createdAt).toLocaleDateString("en-GB", {
-                timeZone: "UTC",
-              })}
-            </span>
-            <span>
-              Updated:{" "}
-              {new Date(updatedAt).toLocaleDateString("en-GB", {
-                timeZone: "UTC",
-              })}
-            </span>
-          </div>
-        </div>
-        <div className="absolute top-1 left-2 flex gap-2">
-          <TechIcons tech={tech} />
-        </div>
-        <Heading
+        <TopBar tech={tech} createdAt={createdAt} updatedAt={updatedAt} />
+
+        <HeadingSection
           name={name}
           homePage={homePage}
           tagline={tagline}
           isMinimized={isMinimized}
         />
-        {isMinimized ? (
-          <ChevronDown className={iconSize} />
-        ) : (
-          <ChevronUp className={iconSize} />
-        )}
       </section>
       {!isMinimized && (
         <section className="w-full">
@@ -103,43 +79,6 @@ export default function ProjectCard({
         </section>
       )}
     </article>
-  );
-}
-
-function Heading({
-  name,
-  homePage,
-  tagline,
-  isMinimized,
-}: Pick<
-  ProjectDataWithUpdatedAt,
-  "name" | "homePage" | "mediaList" | "tagline"
-> & {
-  isMinimized: boolean;
-}) {
-  if (!homePage) {
-    return (
-      <div className="relative flex flex-col gap-2">
-        <h3 className="xs:text-xl text-base font-semibold">{name}</h3>
-        {isMinimized && (
-          <span className="text-foreground-muted">{tagline}</span>
-        )}
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-col gap-2">
-      <h3 className="text-foreground-strong xs:text-xl w-fit text-base font-semibold">
-        <Link href={homePage} target="_blank" className="hover:underline">
-          <span className="flex gap-2">
-            {name}
-            <ExternalLink className={iconSize} />
-          </span>
-        </Link>
-      </h3>
-      {isMinimized && <span className="text-foreground-muted">{tagline}</span>}
-    </div>
   );
 }
 
@@ -199,5 +138,112 @@ function AdditionalDetail({
         </Link>
       </footer>
     </>
+  );
+}
+
+function TopBar({
+  tech,
+  createdAt,
+  updatedAt,
+}: {
+  tech: string[];
+  createdAt: number;
+  updatedAt: string;
+}) {
+  let updateText = new Date(updatedAt)
+    .toLocaleDateString("en-GB", {
+      timeZone: "UTC",
+    })
+    .toString();
+  updateText = updateText === "Invalid Date" ? "" : updateText;
+  return (
+    <section
+      className={`bg-background-lighter/60 xs:text-2xs text-foreground-muted text-3xs flex flex-wrap justify-between gap-2 px-1 ${jetbrainsMono.className}`}
+    >
+      <div className="flex gap-2">
+        <TechIcons tech={tech} />
+      </div>
+      <div className="flex flex-col">
+        <span>
+          Created:{" "}
+          {new Date(createdAt).toLocaleDateString("en-GB", {
+            timeZone: "UTC",
+          })}
+        </span>
+        {updateText && (
+          <span>
+            Updated:{" "}
+            {new Date(updatedAt).toLocaleDateString("en-GB", {
+              timeZone: "UTC",
+            })}
+          </span>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function HeadingSection({
+  name,
+  homePage,
+  tagline,
+  isMinimized,
+}: Pick<
+  ProjectDataWithUpdatedAt,
+  "name" | "homePage" | "mediaList" | "tagline"
+> & {
+  isMinimized: boolean;
+}) {
+  return (
+    <div className="bg-background-lighter/60 relative flex w-full justify-between rounded-t-md px-2 pt-2 pb-6 select-none group-last:rounded-md">
+      <Heading
+        name={name}
+        homePage={homePage}
+        tagline={tagline}
+        isMinimized={isMinimized}
+      />
+      {isMinimized ? (
+        <ChevronDown className={iconSize} />
+      ) : (
+        <ChevronUp className={iconSize} />
+      )}
+    </div>
+  );
+}
+
+function Heading({
+  name,
+  homePage,
+  tagline,
+  isMinimized,
+}: Pick<
+  ProjectDataWithUpdatedAt,
+  "name" | "homePage" | "mediaList" | "tagline"
+> & {
+  isMinimized: boolean;
+}) {
+  if (!homePage) {
+    return (
+      <div className="relative flex flex-col gap-2">
+        <h3 className="xs:text-xl text-base font-semibold">{name}</h3>
+        {isMinimized && (
+          <span className="text-foreground-muted">{tagline}</span>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-2">
+      <h3 className="text-foreground-strong xs:text-xl w-fit text-base font-semibold">
+        <Link href={homePage} target="_blank" className="hover:underline">
+          <span className="flex gap-2">
+            {name}
+            <ExternalLink className={iconSize} />
+          </span>
+        </Link>
+      </h3>
+      {isMinimized && <span className="text-foreground-muted">{tagline}</span>}
+    </div>
   );
 }
