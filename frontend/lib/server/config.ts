@@ -1,0 +1,20 @@
+export const serverConfig = {
+  repoListFile: "repolist.json",
+  displayedRepos: [
+    "inventorymanager",
+    "ffmpeg_service",
+    "mgck",
+    "blog",
+    "tetris",
+    "foodinventorymanager",
+    "gemini_summariser",
+    "spotify-playlist-cli",
+    "download-watcher",
+    "gamejam24",
+    "pomodoro-cli",
+    "mypage",
+    "advent-of-code-2024",
+    "aoc2023",
+    "ink-scrollable-list",
+  ],
+};

@@ -45,3 +45,5 @@ notes/*
 **/public/videos/*
 Dockerfile
 docker-compose.yml
+
+data/*
