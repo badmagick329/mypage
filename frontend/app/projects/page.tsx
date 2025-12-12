@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 export default async function Projects() {
   const resp = (await (await fetch(REPOS)).json()) as ReposResponse;
   let projects: ProjectDataWithUpdatedAt[];
-  if (!Array.isArray(resp)) {
+  if (!resp.ok) {
     projects = projectsData.map((p) => ({
       ...p,
       updatedAt: "",
@@ -42,7 +42,7 @@ export default async function Projects() {
     projects = projectsData.map((p) => ({
       ...p,
       updatedAt:
-        resp.find((r) => r.name === p.githubProjectName)?.updatedAt || "",
+        resp.data.find((r) => r.name === p.githubProjectName)?.updatedAt || "",
     }));
   }
 

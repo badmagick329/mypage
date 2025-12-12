@@ -1,39 +1,18 @@
-import { serverConfig } from "@/lib/server/config";
-import { GitHubRepository, ReposResponse, RepoSummary } from "@/lib/types";
-import { NextRequest, NextResponse } from "next/server";
-import * as fs from "node:fs";
+import { getReposSummary } from "@/lib/server/repos";
+import { RepoSummary } from "@/lib/types";
+import { NextResponse } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-): Promise<NextResponse<ReposResponse>> {
-  const dataDir = getDataDir();
-  if (!dataDir) {
-    return NextResponse.json<{ error: string }>(
-      { error: "DATA_DIR is not set" },
+export async function GET(): Promise<
+  NextResponse<{ ok: false; error: string } | { ok: true; data: RepoSummary[] }>
+> {
+  const reposSummaryResult = await getReposSummary();
+  if (!reposSummaryResult.ok) {
+    console.error("Error fetching repos summary:", reposSummaryResult.error);
+    return NextResponse.json(
+      { ok: false, error: reposSummaryResult.error },
       { status: 500 },
     );
   }
 
-  try {
-    const content = fs
-      .readFileSync(`${dataDir}/${serverConfig.repoListFile}`)
-      .toString();
-    const parsed: RepoSummary[] = (JSON.parse(content) as GitHubRepository[])
-      .filter((d) => serverConfig.displayedRepos.includes(d.name))
-      .map((d) => ({
-        name: d.name,
-        updatedAt: d.pushed_at,
-      }));
-
-    return NextResponse.json<RepoSummary[]>(parsed);
-  } catch {
-    return NextResponse.json<{ error: string }>(
-      { error: "Failed to read repository data" },
-      { status: 500 },
-    );
-  }
-}
-
-function getDataDir(): string | undefined {
-  return process.env.DATA_DIR;
+  return NextResponse.json({ ok: true, data: reposSummaryResult.data });
 }

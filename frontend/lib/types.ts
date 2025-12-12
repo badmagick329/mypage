@@ -120,7 +120,14 @@ export type RepoSummary = {
   updatedAt: string;
 };
 
-export type ReposResponse = RepoSummary[] | { error: string };
+export type CachedSummary = {
+  lastUpdated: string | undefined;
+  data: GitHubRepository[];
+};
+
+export type ReposResponse =
+  | { ok: true; data: RepoSummary[] }
+  | { ok: false; error: string };
 
 export type ProjectDataWithUpdatedAt = ProjectData & {
   updatedAt: string;
