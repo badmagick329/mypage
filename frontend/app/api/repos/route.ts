@@ -22,7 +22,7 @@ export async function GET(
       .filter((d) => serverConfig.displayedRepos.includes(d.name))
       .map((d) => ({
         name: d.name,
-        updatedAt: d.updated_at,
+        updatedAt: d.pushed_at,
       }));
 
     return NextResponse.json<RepoSummary[]>(parsed);
