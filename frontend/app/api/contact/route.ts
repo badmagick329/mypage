@@ -1,4 +1,3 @@
-"use server";
 import { sendDiscordMessage } from "@/lib/server/discord-messenger";
 import { checkRateLimitStatus } from "@/lib/server/rate-limitter";
 import { NextRequest, NextResponse } from "next/server";
