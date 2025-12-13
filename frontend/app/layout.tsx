@@ -4,6 +4,7 @@ import { Geist, Geist_Mono, Caveat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/app/_components/Navbar";
 import AnimatedBackground from "@/app/_components/AnimatedBackground";
+import QueryProvider from "@/app/_components/QueryProvider";
 import Script from "next/script";
 
 const geistSans = Geist({
@@ -100,9 +101,11 @@ export default function RootLayout({
       >
         <main className="flex min-h-screen flex-col items-center font-sans">
           <ThemeProvider attribute="class">
-            <AnimatedBackground />
-            <Navbar />
-            {children}
+            <QueryProvider>
+              <AnimatedBackground />
+              <Navbar />
+              {children}
+            </QueryProvider>
           </ThemeProvider>
         </main>
       </body>

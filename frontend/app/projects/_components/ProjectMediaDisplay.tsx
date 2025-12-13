@@ -1,6 +1,5 @@
 "use client";
 
-import { ProjectMedia } from "@/app/projects/_components/projects-data";
 import {
   Carousel,
   CarouselContent,
@@ -10,6 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import VideoPlayer from "@/app/projects/_components/VideoPlayer";
 import useProjectMediaDisplay from "@/hooks/projects/useProjectMediaDisplay";
+import { ProjectMedia } from "@/lib/types";
 
 export default function ProjectMediaDisplay({
   mediaList,

@@ -2,13 +2,17 @@
 import FilterBar from "@/app/projects/_components/FilterBar";
 import ProjectCard from "@/app/projects/_components/ProjectCard";
 import useProjectTags from "@/hooks/projects/useProjectTags";
-import { ProjectDataWithUpdatedAt } from "@/lib/types";
+import { ProjectData, ReposSummary } from "@/lib/types";
+import { tryFetchReposSummary } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 export default function ProjectsClientPage({
+  reposSummary,
   projects,
 }: {
-  projects: ProjectDataWithUpdatedAt[];
+  reposSummary: ReposSummary;
+  projects: ProjectData[];
 }) {
   const { allTags, toggleTag, filteredProjects, selectedTags, tagsAndCount } =
     useProjectTags(projects);
@@ -16,6 +20,22 @@ export default function ProjectsClientPage({
   const toggleExpansion = (projectName: string) => {
     setExpandedProject((prev) => (prev === projectName ? null : projectName));
   };
+
+  const { data: summary = reposSummary } = useQuery({
+    queryKey: ["reposSummary"],
+    queryFn: async () => {
+      try {
+        const result = await tryFetchReposSummary({ cacheOnly: false });
+
+        if (result === null) {
+          return reposSummary;
+        }
+        return result;
+      } catch {
+        return reposSummary;
+      }
+    },
+  });
 
   return (
     <div className="flex w-full flex-col items-center px-2 pb-8">
@@ -36,6 +56,7 @@ export default function ProjectsClientPage({
               projectData={p}
               toggleExpansion={toggleExpansion}
               expandedProject={expandedProject}
+              updatedAt={summary[p.githubProjectName]?.updatedAt || ""}
             />
           ))}
         </div>

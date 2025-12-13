@@ -1,18 +1,18 @@
 "use client";
 
-import { ProjectDataWithUpdatedAt } from "@/lib/types";
+import { ProjectData } from "@/lib/types";
 import { useMemo, useState } from "react";
 
 export interface UseProjectTagsReturn {
   selectedTags: string[];
   allTags: string[];
   toggleTag: (tag: string) => void;
-  filteredProjects: ProjectDataWithUpdatedAt[];
+  filteredProjects: ProjectData[];
   tagsAndCount: Map<string, number>;
 }
 
 export default function useProjectTags(
-  projects: ProjectDataWithUpdatedAt[],
+  projects: ProjectData[],
 ): UseProjectTagsReturn {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const filteredProjects = useMemo(() => {

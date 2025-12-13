@@ -1,8 +1,7 @@
 import ProjectsClientPage from "@/app/projects/_components/ProjectsClientPage";
 import type { Metadata } from "next";
 import { projectsData } from "@/app/projects/_components/projects-data";
-import { ProjectDataWithUpdatedAt, ReposResponse } from "@/lib/types";
-import { REPOS } from "@/lib/urls";
+import { tryFetchReposSummary } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -31,20 +30,10 @@ export const metadata: Metadata = {
 };
 
 export default async function Projects() {
-  const resp = (await (await fetch(REPOS)).json()) as ReposResponse;
-  let projects: ProjectDataWithUpdatedAt[];
-  if (!resp.ok) {
-    projects = projectsData.map((p) => ({
-      ...p,
-      updatedAt: "",
-    }));
-  } else {
-    projects = projectsData.map((p) => ({
-      ...p,
-      updatedAt:
-        resp.data.find((r) => r.name === p.githubProjectName)?.updatedAt || "",
-    }));
-  }
+  const result = await tryFetchReposSummary({ cacheOnly: true });
+  const reposSummary = result === null ? {} : result;
 
-  return <ProjectsClientPage projects={projects} />;
+  return (
+    <ProjectsClientPage reposSummary={reposSummary} projects={projectsData} />
+  );
 }

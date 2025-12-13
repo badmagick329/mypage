@@ -1,11 +1,17 @@
 import { getReposSummary } from "@/lib/server/repos";
-import { RepoSummary } from "@/lib/types";
-import { NextResponse } from "next/server";
+import { ReposSummary } from "@/lib/types";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(): Promise<
-  NextResponse<{ ok: false; error: string } | { ok: true; data: RepoSummary[] }>
+export async function GET(
+  request: NextRequest,
+): Promise<
+  NextResponse<{ ok: false; error: string } | { ok: true; data: ReposSummary }>
 > {
-  const reposSummaryResult = await getReposSummary();
+  const url = new URL(request.url);
+  const fetchFromCache = Boolean(url.searchParams.get("cache")) ?? false;
+
+  const reposSummaryResult = await getReposSummary(fetchFromCache);
+
   if (!reposSummaryResult.ok) {
     console.error("Error fetching repos summary:", reposSummaryResult.error);
     return NextResponse.json(

@@ -1,18 +1,4 @@
-export type ProjectData = {
-  name: string;
-  githubProjectName: string;
-  homePage?: string;
-  mediaList?: ProjectMedia[];
-  tagline: string;
-  shortDescription: string;
-  description: string;
-  why: string;
-  tech: string[];
-  tags: string[];
-  createdAt: number;
-};
-
-export type ProjectMedia = { url: string; text: string; type: string };
+import { ProjectData } from "@/lib/types";
 
 export const projectsData = [
   {

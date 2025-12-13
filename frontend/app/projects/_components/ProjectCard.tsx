@@ -5,8 +5,8 @@ import Link from "next/link";
 import ProjectMediaDisplay from "@/app/projects/_components/ProjectMediaDisplay";
 import { useRef, useEffect } from "react";
 import TechIcons from "@/app/projects/_components/TechIcons";
-import { ProjectDataWithUpdatedAt } from "@/lib/types";
 import { JetBrains_Mono } from "next/font/google";
+import { ProjectData } from "@/lib/types";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
 
@@ -16,10 +16,12 @@ export default function ProjectCard({
   projectData,
   toggleExpansion,
   expandedProject,
+  updatedAt,
 }: {
-  projectData: ProjectDataWithUpdatedAt;
+  projectData: ProjectData;
   toggleExpansion: (name: string) => void;
   expandedProject: string | null;
+  updatedAt: string;
 }) {
   const {
     name,
@@ -31,7 +33,6 @@ export default function ProjectCard({
     why,
     tech,
     createdAt,
-    updatedAt,
   } = projectData;
   const isMinimized = name !== expandedProject;
   const cardRef = useRef<HTMLElement>(null);
@@ -90,7 +91,7 @@ function AdditionalDetail({
   githubProjectName,
   isMinimized,
 }: Pick<
-  ProjectDataWithUpdatedAt,
+  ProjectData,
   "description" | "why" | "tech" | "githubProjectName" | "mediaList"
 > & { isMinimized: boolean }) {
   return (
@@ -160,7 +161,7 @@ function TopBar({
     <section
       className={`bg-background-lighter/60 xs:text-2xs text-foreground-muted text-3xs flex flex-wrap justify-between gap-2 px-1 ${jetbrainsMono.className}`}
     >
-      <div className="flex gap-2">
+      <div className="text-foreground-strong flex gap-2">
         <TechIcons tech={tech} />
       </div>
       <div className="flex flex-col">
@@ -188,10 +189,7 @@ function HeadingSection({
   homePage,
   tagline,
   isMinimized,
-}: Pick<
-  ProjectDataWithUpdatedAt,
-  "name" | "homePage" | "mediaList" | "tagline"
-> & {
+}: Pick<ProjectData, "name" | "homePage" | "mediaList" | "tagline"> & {
   isMinimized: boolean;
 }) {
   return (
@@ -216,10 +214,7 @@ function Heading({
   homePage,
   tagline,
   isMinimized,
-}: Pick<
-  ProjectDataWithUpdatedAt,
-  "name" | "homePage" | "mediaList" | "tagline"
-> & {
+}: Pick<ProjectData, "name" | "homePage" | "mediaList" | "tagline"> & {
   isMinimized: boolean;
 }) {
   if (!homePage) {

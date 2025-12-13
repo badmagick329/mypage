@@ -1,4 +1,18 @@
-import { ProjectData } from "@/app/projects/_components/projects-data";
+export type ProjectData = {
+  name: string;
+  githubProjectName: string;
+  homePage?: string;
+  mediaList?: ProjectMedia[];
+  tagline: string;
+  shortDescription: string;
+  description: string;
+  why: string;
+  tech: string[];
+  tags: string[];
+  createdAt: number;
+};
+
+export type ProjectMedia = { url: string; text: string; type: string };
 
 export type GitHubRepository = {
   id: number;
@@ -115,20 +129,17 @@ export type GitHubRepository = {
   };
 };
 
-export type RepoSummary = {
-  name: string;
-  updatedAt: string;
+export type ReposSummary = {
+  [key: string]: {
+    updatedAt: string;
+  };
 };
 
-export type CachedSummary = {
+export type DiskCachedGitHubResponse = {
   lastUpdated: string | undefined;
   data: GitHubRepository[];
 };
 
 export type ReposResponse =
-  | { ok: true; data: RepoSummary[] }
+  | { ok: true; data: ReposSummary }
   | { ok: false; error: string };
-
-export type ProjectDataWithUpdatedAt = ProjectData & {
-  updatedAt: string;
-};
