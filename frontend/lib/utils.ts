@@ -12,7 +12,7 @@ export async function tryFetchReposSummary({
 }: {
   cacheOnly: boolean;
 }) {
-  const url = `${REPOS}?cache=${cacheOnly ? "1" : ""}`;
+  const url = `${REPOS}${cacheOnly ? "?cache=1" : ""}`;
 
   try {
     const resp = (await (await fetch(url)).json()) as ReposResponse;

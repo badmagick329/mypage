@@ -1,11 +1,9 @@
 "use client";
 import FilterBar from "@/app/projects/_components/FilterBar";
 import ProjectCard from "@/app/projects/_components/ProjectCard";
+import useProjectsClientPage from "@/hooks/projects/useProjectsClientPage";
 import useProjectTags from "@/hooks/projects/useProjectTags";
 import { ProjectData, ReposSummary } from "@/lib/types";
-import { tryFetchReposSummary } from "@/lib/utils";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 
 export default function ProjectsClientPage({
   reposSummary,
@@ -16,26 +14,8 @@ export default function ProjectsClientPage({
 }) {
   const { allTags, toggleTag, filteredProjects, selectedTags, tagsAndCount } =
     useProjectTags(projects);
-  const [expandedProject, setExpandedProject] = useState<string | null>(null);
-  const toggleExpansion = (projectName: string) => {
-    setExpandedProject((prev) => (prev === projectName ? null : projectName));
-  };
-
-  const { data: summary = reposSummary } = useQuery({
-    queryKey: ["reposSummary"],
-    queryFn: async () => {
-      try {
-        const result = await tryFetchReposSummary({ cacheOnly: false });
-
-        if (result === null) {
-          return reposSummary;
-        }
-        return result;
-      } catch {
-        return reposSummary;
-      }
-    },
-  });
+  const { expandedProject, toggleExpansion, summary } =
+    useProjectsClientPage(reposSummary);
 
   return (
     <div className="flex w-full flex-col items-center px-2 pb-8">
