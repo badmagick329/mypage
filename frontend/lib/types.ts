@@ -140,6 +140,28 @@ export type DiskCachedGitHubResponse = {
   data: GitHubRepository[];
 };
 
-export type ReposResponse =
-  | { ok: true; data: ReposSummary }
+export type APIResponse<T> =
+  | { ok: true; data: T }
   | { ok: false; error: string };
+
+export type Activity = {
+  date: string | undefined;
+  message: string;
+  repo: string;
+  repoUrl: string;
+  sha: string;
+};
+
+export type LanguageTimeline = {
+  [yearMonth: string]: {
+    [language: string]: number;
+  };
+};
+
+export type ActivityData = {
+  activityTimeline: Activity[];
+  languageTimeline: LanguageTimeline;
+};
+
+export type ReposResponse = APIResponse<ReposSummary>;
+export type ActivityDataResponse = APIResponse<ActivityData>;

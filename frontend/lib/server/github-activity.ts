@@ -1,0 +1,51 @@
+import * as fs from "node:fs";
+import { serverConfig } from "@/lib/server/config";
+import { ActivityData, ActivityDataResponse } from "@/lib/types";
+
+export async function getGitHubActivity(): Promise<ActivityDataResponse> {
+  const dataDir = getDataDir();
+  if (!dataDir) {
+    return { ok: false, error: "DATA_DIR is not set" };
+  }
+
+  const content = fs
+    .readFileSync(`${dataDir}/${serverConfig.activityFile}`)
+    .toString();
+  const parsed: ActivityData = JSON.parse(content);
+
+  const oldest = new Date();
+  oldest.setFullYear(oldest.getFullYear() - 3);
+
+  return {
+    ok: true,
+    data: filterByDate(parsed, oldest),
+  };
+}
+
+function filterByDate(data: ActivityData, oldest: Date): ActivityData {
+  const filteredData: ActivityData = {
+    activityTimeline: [],
+    languageTimeline: {},
+  };
+
+  filteredData.activityTimeline = data.activityTimeline.filter((activity) => {
+    if (activity.date) {
+      const activityDate = new Date(activity.date);
+      return activityDate >= oldest;
+    } else {
+      return false;
+    }
+  });
+  filteredData.languageTimeline = Object.fromEntries(
+    Object.entries(data.languageTimeline).filter(([month]) => {
+      const [year, monthNum] = month.split("-").map(Number);
+      const monthDate = new Date(year, monthNum - 1);
+      return monthDate >= oldest;
+    }),
+  );
+  return filteredData;
+}
+
+function getDataDir(): string | undefined {
+  return process.env.DATA_DIR;
+}

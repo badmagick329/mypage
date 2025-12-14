@@ -1,12 +1,10 @@
 import { getReposSummary } from "@/lib/server/repos";
-import { ReposSummary } from "@/lib/types";
+import { ReposResponse } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
-): Promise<
-  NextResponse<{ ok: false; error: string } | { ok: true; data: ReposSummary }>
-> {
+): Promise<NextResponse<ReposResponse>> {
   const url = new URL(request.url);
   const fetchFromCache = Boolean(url.searchParams.get("cache")) ?? false;
 

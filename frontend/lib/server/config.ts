@@ -1,5 +1,6 @@
 export const serverConfig = {
   repoListFile: "repolist.json",
+  activityFile: "activity.json",
   displayedRepos: [
     "inventorymanager",
     "ffmpeg_service",

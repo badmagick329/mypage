@@ -1,3 +1,4 @@
+import RecentActivity from "@/app/_components/RecentActivity";
 import WelcomeMessage from "@/app/_components/WelcomeMessage";
 import type { Metadata } from "next";
 
@@ -25,8 +26,9 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="mt-18 px-2">
+    <div className="mt-18 flex flex-col items-center gap-4 px-2">
       <WelcomeMessage />
+      <RecentActivity />
     </div>
   );
 }
