@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="mt-18 flex flex-col items-center gap-4 px-2">
+    <div className="flex grow flex-col items-center justify-between gap-4 px-2 pt-18 pb-8">
       <WelcomeMessage />
       <RecentActivity />
     </div>

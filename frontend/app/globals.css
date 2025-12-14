@@ -36,7 +36,7 @@
   --primary-foreground: var(--background-lighter);
 
   --secondary: var(--background-light);
-  --secondary-foreground: var(--foreground);
+  --secondary-foreground: var(--foreground-strong);
 
   --muted: oklch(0.97 0 0);
   --muted-foreground: var(--foreground-muted);
@@ -102,7 +102,7 @@
   --primary-foreground: var(--foreground-strong);
 
   --secondary: var(--background-light);
-  --secondary-foreground: var(--foreground);
+  --secondary-foreground: var(--foreground-strong);
 
   --muted: oklch(0.269 0 0);
   --muted-foreground: var(--foreground-muted);
@@ -145,6 +145,17 @@
   --color-primary: var(--primary);
   --color-primary-muted: var(--primary-muted);
   --color-welcome-card-header: var(--welcome-card-header);
+
+  --color-typescript: oklch(54% 0.21 253);
+  --color-python: oklch(58% 0.19 248);
+  --color-csharp: oklch(56% 0.22 285);
+  --color-javascript: oklch(73% 0.16 93);
+  --color-html: oklch(62% 0.24 32);
+  --color-css: oklch(55% 0.22 258);
+  --color-go: oklch(62% 0.18 197);
+  --color-rust: oklch(60% 0.23 40);
+  --color-sql: oklch(61% 0.21 25);
+  --color-shell: oklch(38% 0.06 0);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

@@ -12,9 +12,19 @@ export async function getGitHubActivity(): Promise<ActivityDataResponse> {
     .readFileSync(`${dataDir}/${serverConfig.activityFile}`)
     .toString();
   const parsed: ActivityData = JSON.parse(content);
+  parsed.languageTimeline = Object.fromEntries(
+    Object.entries(parsed.languageTimeline).map(([month, languages]) => [
+      month,
+      Object.fromEntries(
+        Object.entries(languages).filter(
+          ([lang]) => !["Shell", "SQL"].includes(lang),
+        ),
+      ),
+    ]),
+  );
 
   const oldest = new Date();
-  oldest.setFullYear(oldest.getFullYear() - 3);
+  oldest.setFullYear(oldest.getFullYear() - 5);
 
   return {
     ok: true,
