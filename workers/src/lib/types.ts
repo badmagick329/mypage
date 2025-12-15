@@ -6,6 +6,7 @@ export type Activity = {
   repo: string;
   repoUrl: string;
   sha: string;
+  files: string[];
 };
 
 export type LanguageTimeline = {

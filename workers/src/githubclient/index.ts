@@ -23,16 +23,62 @@ export class GitHubClient {
         console.log("Found old data");
         this.allCommits = oldData.activityTimeline;
         console.log(`${this.allCommits.length} commits`);
-        this.languageUsageByMonth = new Map(
-          Object.entries(oldData.languageTimeline)
-        );
       }
     } catch {
       //
     }
   }
 
-  lastFetch() {
+  get data(): ActivityData {
+    return {
+      activityTimeline: this.allCommits,
+      languageTimeline: Object.fromEntries(this.languageUsageByMonth),
+    };
+  }
+
+  async fetchNewData() {
+    if (await this.isNearRateLimit()) {
+      console.log("Stopping due to rate limit");
+      return;
+    }
+
+    const repos = await this.getRepos();
+
+    const lastFetch = this.lastFetch();
+    const reposProcessed = [] as string[];
+
+    for (let i = 0; i < repos.length; i++) {
+      const repo = repos[i]!;
+      console.log(`[${i + 1}/${repos.length}] - Processing repo: ${repo.name}`);
+
+      try {
+        const commits = await this.getCommits(repo, lastFetch);
+        for (const commit of commits) {
+          await this.extractDataFromCommit(repo, commit);
+        }
+
+        this.saveToFile();
+        reposProcessed.push(repo.name);
+
+        if (await this.isNearRateLimit()) {
+          console.log("Stopping due to rate limit");
+          break;
+        }
+      } catch (error) {
+        this.createLanguageTimeline();
+        this.saveToFile();
+        console.error(`Error processing repo ${repo.name}:`, error);
+        break;
+      }
+    }
+
+    this.createLanguageTimeline();
+    this.saveToFile();
+    console.log("repos processed");
+    console.log(reposProcessed);
+  }
+
+  private lastFetch() {
     let lastFetch: Date | null = null;
 
     for (const activity of this.allCommits) {
@@ -49,7 +95,7 @@ export class GitHubClient {
     return lastFetch;
   }
 
-  async isNearRateLimit() {
+  private async isNearRateLimit() {
     const { data } = await this.octokit.request("GET /rate_limit");
     const remaining = data.rate.remaining;
     const resetTime = new Date(data.rate.reset * 1000);
@@ -64,7 +110,7 @@ export class GitHubClient {
     return false;
   }
 
-  async getRepos() {
+  private async getRepos() {
     if (this.cachedRepos) {
       return this.cachedRepos;
     }
@@ -79,22 +125,37 @@ export class GitHubClient {
     return filtered;
   }
 
-  async getCommits(repo: UserRepo, commitsSince: Date) {
+  private async getCommits(repo: UserRepo, commitsSince: Date) {
     console.log(
       `[${repo.name}] - getting commits since ${commitsSince?.toISOString()}`
     );
 
-    return (
-      await this.octokit.paginate("GET /repos/{owner}/{repo}/commits", {
+    const recentByDate = await this.octokit.paginate(
+      "GET /repos/{owner}/{repo}/commits",
+      {
         owner: repo.owner.login,
         repo: repo.name,
         since: commitsSince.toISOString(),
         per_page: 100,
-      })
+      }
+    );
+    const recentByCount = await this.octokit.paginate(
+      "GET /repos/{owner}/{repo}/commits",
+      {
+        owner: repo.owner.login,
+        repo: repo.name,
+        per_page: 50,
+      }
+    );
+
+    return Array.from(
+      new Map(
+        [...recentByDate, ...recentByCount].map((c) => [c.sha, c])
+      ).values()
     ).filter((c) => c.author?.login === "badmagick329");
   }
 
-  async extractDataFromCommit(repo: UserRepo, commit: Commit) {
+  private async extractDataFromCommit(repo: UserRepo, commit: Commit) {
     const { data: commitDetail } = await this.octokit.request(
       "GET /repos/{owner}/{repo}/commits/{ref}",
       {
@@ -104,59 +165,57 @@ export class GitHubClient {
       }
     );
 
-    this.allCommits.push({
+    const commitDetails = {
       date: commitDetail.commit.author?.date,
       message: commitDetail.commit.message,
       repo: repo.name,
       repoUrl: repo.html_url,
       sha: commit.sha,
-    });
+      files: commitDetail.files?.map((f) => f.filename) || ([] as string[]),
+    };
+
+    this.allCommits.push(commitDetails);
     this.dedupeAllCommits();
+  }
 
-    const month = commitDetail.commit.author?.date?.substring(0, 7); // "2025-11"
-    if (!month) return;
+  private createLanguageTimeline() {
+    this.languageUsageByMonth = new Map<string, Record<string, number>>();
 
-    if (!this.languageUsageByMonth.has(month)) {
-      this.languageUsageByMonth.set(month, {});
-    }
+    for (const commit of this.allCommits) {
+      const month = commit.date?.substring(0, 7); // "2025-11"
+      if (!month) {
+        continue;
+      }
 
-    const monthData = this.languageUsageByMonth.get(month);
-    if (!monthData) return;
+      if (!this.languageUsageByMonth.has(month)) {
+        this.languageUsageByMonth.set(month, {});
+      }
 
-    for (const file of commitDetail.files || []) {
-      const extension = getFileExtension(file.filename);
-      if (extension) {
-        monthData[extension] = (monthData[extension] || 0) + 1;
+      const monthData = this.languageUsageByMonth.get(month);
+      if (!monthData) {
+        continue;
+      }
+
+      for (const file of commit.files) {
+        const extension = getFileExtension(file);
+        if (extension) {
+          monthData[extension] = (monthData[extension] || 0) + 1;
+        }
       }
     }
   }
 
   private dedupeAllCommits() {
-    const uniqueCommits: Record<string, Activity> = {};
-
-    for (const commit of this.allCommits) {
-      uniqueCommits[commit.sha] = commit;
-    }
-    this.allCommits = Object.values(uniqueCommits);
-    this.allCommits.sort((a, b) => {
+    return Array.from(
+      new Map(this.allCommits.map((c) => [c.sha, c])).values()
+    ).sort((a, b) => {
       const timeA = a.date ? new Date(a.date).getTime() : 0;
       const timeB = b.date ? new Date(b.date).getTime() : 0;
       return timeB - timeA;
     });
   }
 
-  get data(): ActivityData {
-    return {
-      activityTimeline: this.allCommits.sort((a, b) => {
-        const timeA = a.date ? new Date(a.date).getTime() : 0;
-        const timeB = b.date ? new Date(b.date).getTime() : 0;
-        return timeB - timeA;
-      }),
-      languageTimeline: Object.fromEntries(this.languageUsageByMonth),
-    };
-  }
-
-  saveToFile() {
+  private saveToFile() {
     fs.writeFileSync(this.cacheFile, JSON.stringify(this.data));
   }
 }
