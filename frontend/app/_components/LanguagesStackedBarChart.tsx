@@ -5,24 +5,10 @@ import {
   BarChart,
   Bar,
   XAxis,
-  YAxis,
   Tooltip,
-  Legend,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
-
-const widthToNumber = (width: number) => {
-  if (width > 1000) {
-    return 48;
-  }
-  if (width > 800) {
-    return 36;
-  }
-  if (width > 500) {
-    return 24;
-  }
-  return 12;
-};
 
 export default function LanguagesStackedBarChart({
   data,
@@ -32,7 +18,7 @@ export default function LanguagesStackedBarChart({
   const { chartData, languageAndCount, languages } = getTransformedData(data);
 
   return (
-    <section className="flex flex-col items-center gap-2">
+    <section className="mx-auto flex max-w-xs flex-col items-center gap-2">
       <h3 className="text-lg font-semibold sm:text-xl">
         Language use over time
       </h3>
@@ -45,9 +31,8 @@ export default function LanguagesStackedBarChart({
             height={80}
             fontSize={12}
           />
-          {/* <YAxis tickFormatter={(value) => `${value}%`} fontSize={12} /> */}
+          <Legend />
           <Tooltip />
-          {/* <Legend /> */}
           {languages.map((l) => {
             return (
               <Bar

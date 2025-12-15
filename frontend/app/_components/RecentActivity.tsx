@@ -5,6 +5,7 @@ import { ACTIVITY } from "@/lib/urls";
 import { useQuery } from "@tanstack/react-query";
 import LanguagesStackedBarChart from "@/app/_components/LanguagesStackedBarChart";
 import RecentCommits from "@/app/_components/RecentCommits";
+import ActivityLineChart from "@/app/_components/ActivityLineChart";
 
 export default function RecentActivity() {
   const { data, isSuccess } = useQuery({
@@ -28,7 +29,10 @@ export default function RecentActivity() {
   return (
     <div className="mt-4 flex flex-col gap-8">
       <RecentCommits data={data} />
-      <LanguagesStackedBarChart data={data} />
+      <div className="flex flex-col justify-between gap-2 sm:flex-row">
+        <ActivityLineChart data={data} />
+        <LanguagesStackedBarChart data={data} />
+      </div>
     </div>
   );
 }

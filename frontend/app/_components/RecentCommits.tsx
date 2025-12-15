@@ -6,7 +6,7 @@ import React from "react";
 import Link from "next/link";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
-const n = 2000;
+const n = 10000;
 
 export default function RecentCommits({ data }: { data: ActivityData }) {
   return (
