@@ -19,7 +19,9 @@ export class GitHubClient {
       ) as ActivityData;
 
       if (oldData) {
+        console.log("Found old data");
         this.allCommits = oldData.activityTimeline;
+        console.log(`${this.allCommits.length} commits`);
         this.languageUsageByMonth = new Map(
           Object.entries(oldData.languageTimeline)
         );
@@ -30,16 +32,19 @@ export class GitHubClient {
   }
 
   lastFetch() {
-    let lastFetch: Date;
+    let lastFetch: Date | null = null;
 
     for (const activity of this.allCommits) {
       if (activity.date) {
+        console.log(`Last fetch date: ${activity.date}`);
         lastFetch = new Date(activity.date);
         break;
       }
     }
-    lastFetch = new Date();
-    lastFetch.setFullYear(lastFetch.getFullYear() - 10);
+    if (lastFetch === null) {
+      lastFetch = new Date();
+      lastFetch.setFullYear(lastFetch.getFullYear() - 10);
+    }
     return lastFetch;
   }
 
