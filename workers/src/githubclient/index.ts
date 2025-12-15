@@ -10,6 +10,7 @@ export class GitHubClient {
   private cacheFile: string;
 
   constructor(cacheFile: string) {
+    console.log(`Initializing GitHubClient with cache file: ${cacheFile}`);
     this.octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
     this.cachedRepos = null;
     this.cacheFile = cacheFile;

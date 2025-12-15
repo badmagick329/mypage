@@ -3,9 +3,13 @@ import { GitHubClient } from "./githubclient";
 const reposProcessed = [] as string[];
 
 async function main() {
-  fetchNewData();
+  console.log(`[${new Date().toISOString()}] - Starting worker`);
   const interval = setInterval(() => {
-    fetchNewData();
+    try {
+      fetchNewData();
+    } catch (error) {
+      console.error("Error in fetchNewData interval:", error);
+    }
   }, 1000 * 60 * 30);
 }
 
@@ -19,7 +23,9 @@ async function fetchNewData() {
   const repos = await client.getRepos();
 
   const lastFetch = client.lastFetch();
-  for (const repo of repos) {
+  for (let i = 0; i < repos.length; i++) {
+    const repo = repos[i]!;
+    console.log(`[${i + 1}/${repos.length}] - Processing repo: ${repo.name}`);
     try {
       const commits = await client.getCommits(repo, lastFetch);
       for (const commit of commits) {
