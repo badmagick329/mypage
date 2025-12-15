@@ -50,14 +50,6 @@ export const metadata: Metadata = {
     title: "Uzair Farooqi | Full Stack Developer",
     description:
       "Full stack developer specialising in web applications. Explore my projects and get in touch.",
-    images: [
-      {
-        url: "/wand.png",
-        width: 1200,
-        height: 630,
-        alt: "Uzair Farooqi - Full Stack Developer Portfolio",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
