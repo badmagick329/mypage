@@ -25,7 +25,7 @@ export default function RecentCommits({ data }: { data: ActivityData }) {
                       {t.date?.replace("T", " ").replace("Z", "")}
                     </p>
                     <Link
-                      className="font-semibold text-blue-700 hover:underline dark:text-blue-500"
+                      className="font-semibold whitespace-nowrap text-blue-700 hover:underline dark:text-blue-500"
                       href={t.repoUrl}
                       target="_blank"
                     >
