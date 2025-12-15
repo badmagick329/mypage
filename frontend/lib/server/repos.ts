@@ -106,6 +106,7 @@ async function updateCache() {
     `${getDataDir()}/${serverConfig.repoListFile}`,
     JSON.stringify(response),
   );
+  console.log(`[${new Date().toISOString()}] - Updated cache`);
   return response as { data: GitHubRepository[] };
 }
 

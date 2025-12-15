@@ -13,6 +13,7 @@ export default function useProjectsClientPage(reposSummary: ReposSummary) {
   const { data: summary = reposSummary } = useQuery({
     queryKey: ["reposSummary"],
     initialData: reposSummary,
+    initialDataUpdatedAt: 0,
     queryFn: async () => {
       const result = await tryFetchReposSummary({ cacheOnly: false });
 
