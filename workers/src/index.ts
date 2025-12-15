@@ -18,9 +18,10 @@ async function fetchNewData() {
   }
   const repos = await client.getRepos();
 
+  const lastFetch = client.lastFetch();
   for (const repo of repos) {
     try {
-      const commits = await client.getCommits(repo, client.lastFetch);
+      const commits = await client.getCommits(repo, lastFetch);
       for (const commit of commits) {
         await client.extractDataFromCommit(repo, commit);
       }

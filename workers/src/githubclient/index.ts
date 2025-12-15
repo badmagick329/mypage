@@ -29,8 +29,8 @@ export class GitHubClient {
     }
   }
 
-  get lastFetch() {
-    let lastFetch: null | Date = null;
+  lastFetch() {
+    let lastFetch: Date;
 
     for (const activity of this.allCommits) {
       if (activity.date) {
@@ -38,6 +38,8 @@ export class GitHubClient {
         break;
       }
     }
+    lastFetch = new Date();
+    lastFetch.setFullYear(lastFetch.getFullYear() - 10);
     return lastFetch;
   }
 
@@ -71,22 +73,19 @@ export class GitHubClient {
     return filtered;
   }
 
-  async getCommits(repo: UserRepo, lastFetch: Date | null = null) {
-    let commitsSince: Date;
-    if (lastFetch) {
-      commitsSince = lastFetch;
-    } else {
-      commitsSince = new Date();
-      commitsSince.setFullYear(commitsSince.getFullYear() - 6);
-    }
-    console.log(`getting commits since ${commitsSince.toISOString()}`);
+  async getCommits(repo: UserRepo, commitsSince: Date) {
+    console.log(
+      `[${repo.name}] - getting commits since ${commitsSince?.toISOString()}`
+    );
 
-    return await this.octokit.paginate("GET /repos/{owner}/{repo}/commits", {
-      owner: repo.owner.login,
-      repo: repo.name,
-      since: commitsSince.toISOString(),
-      per_page: 100,
-    });
+    return (
+      await this.octokit.paginate("GET /repos/{owner}/{repo}/commits", {
+        owner: repo.owner.login,
+        repo: repo.name,
+        since: commitsSince.toISOString(),
+        per_page: 100,
+      })
+    ).filter((c) => c.author?.login === "badmagick329");
   }
 
   async extractDataFromCommit(repo: UserRepo, commit: Commit) {
