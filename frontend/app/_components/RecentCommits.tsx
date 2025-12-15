@@ -6,7 +6,7 @@ import React from "react";
 import Link from "next/link";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
-const n = 10000;
+const lastNCommits = 500;
 
 export default function RecentCommits({ data }: { data: ActivityData }) {
   return (
@@ -16,7 +16,7 @@ export default function RecentCommits({ data }: { data: ActivityData }) {
         <div
           className={`text-2xs flex flex-col gap-2 tracking-tighter sm:text-xs ${jetbrainsMono.className}`}
         >
-          {data.activityTimeline.slice(0, n).map((t) => {
+          {data.activityTimeline.slice(0, lastNCommits).map((t) => {
             return (
               <React.Fragment key={t.sha}>
                 <div className="flex flex-col sm:flex-row sm:gap-2">

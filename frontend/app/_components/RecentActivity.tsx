@@ -1,37 +1,23 @@
 "use client";
 
-import { ActivityDataResponse } from "@/lib/types";
-import { ACTIVITY } from "@/lib/urls";
-import { useQuery } from "@tanstack/react-query";
 import LanguagesStackedBarChart from "@/app/_components/LanguagesStackedBarChart";
 import RecentCommits from "@/app/_components/RecentCommits";
 import ActivityLineChart from "@/app/_components/ActivityLineChart";
+import { ActivityData } from "@/lib/types";
 
-export default function RecentActivity() {
-  const { data, isSuccess } = useQuery({
-    queryKey: ["activityData"],
-    queryFn: async () => {
-      const resp = (await (
-        await fetch(ACTIVITY)
-      ).json()) as ActivityDataResponse;
-
-      if (!resp.ok) {
-        return null;
-      }
-      return resp.data;
-    },
-  });
-
-  if (!isSuccess || data === null) {
-    return null;
-  }
+export default function RecentActivity({
+  activityData,
+}: {
+  activityData: ActivityData | null;
+}) {
+  if (activityData === null) return null;
 
   return (
     <div className="mt-4 flex flex-col gap-8">
-      <RecentCommits data={data} />
+      <RecentCommits data={activityData} />
       <div className="flex flex-col justify-between gap-2 sm:flex-row">
-        <ActivityLineChart data={data} />
-        <LanguagesStackedBarChart data={data} />
+        <ActivityLineChart data={activityData} />
+        <LanguagesStackedBarChart data={activityData} />
       </div>
     </div>
   );

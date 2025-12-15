@@ -1,6 +1,9 @@
 import RecentActivity from "@/app/_components/RecentActivity";
 import WelcomeMessage from "@/app/_components/WelcomeMessage";
+import { tryFetchActivityData } from "@/lib/utils";
 import type { Metadata } from "next";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Home | Uzair Farooqi",
@@ -24,11 +27,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const activityData = await tryFetchActivityData();
   return (
     <div className="flex grow flex-col items-center justify-between gap-4 px-2 pt-18 pb-8">
       <WelcomeMessage />
-      <RecentActivity />
+      <RecentActivity activityData={activityData} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import { ReposResponse } from "@/lib/types";
-import { REPOS } from "@/lib/urls";
+import { ActivityDataResponse, ReposResponse } from "@/lib/types";
+import { ACTIVITY, REPOS } from "@/lib/urls";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -23,4 +23,13 @@ export async function tryFetchReposSummary({
   } catch {
     return null;
   }
+}
+
+export async function tryFetchActivityData() {
+  const resp = (await (await fetch(ACTIVITY)).json()) as ActivityDataResponse;
+
+  if (!resp.ok) {
+    return null;
+  }
+  return resp.data;
 }

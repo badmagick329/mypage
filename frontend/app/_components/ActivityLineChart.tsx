@@ -33,12 +33,7 @@ export default function ActivityLineChart({ data }: { data: ActivityData }) {
         />
         <YAxis width="auto" fontSize={12} />
         <Tooltip />
-        <Line
-          type="monotone"
-          dataKey="count"
-          stroke="#8884d8"
-          isAnimationActive={false}
-        />
+        <Line type="monotone" dataKey="count" stroke="#8884d8" />
       </LineChart>
     </section>
   );
@@ -60,7 +55,6 @@ function getTransformedData(data: ActivityData) {
     transformed.push({ month, count });
   }
   transformed = transformed.reverse();
-
   return {
     commitCount: transformed,
   };
