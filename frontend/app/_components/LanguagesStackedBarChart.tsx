@@ -103,7 +103,6 @@ function getTransformedData(data: ActivityData) {
   const languageTimelineByYear = {} as Record<string, Record<string, number>>;
   for (const [period, count] of Object.entries(languageTimeline)) {
     const year = period.slice(0, 4);
-    console.log(year);
     if (!(year in languageTimelineByYear)) {
       languageTimelineByYear[year] = {};
     }

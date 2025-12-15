@@ -102,7 +102,7 @@ export default function RootLayout({
         <main className="flex min-h-screen flex-col items-center font-sans">
           <ThemeProvider attribute="class">
             <QueryProvider>
-              <AnimatedBackground />
+              {/* <AnimatedBackground /> */}
               <Navbar />
               {children}
             </QueryProvider>
