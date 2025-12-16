@@ -53,11 +53,18 @@ export class GitHubClient {
 
       try {
         const commits = await this.getCommits(repo, lastFetch);
-        for (const commit of commits) {
-          await this.extractDataFromCommit(repo, commit);
+        const savedCommits = this.allCommits.filter(
+          (c) => c.repo === repo.name
+        );
+        if (commits.length > savedCommits.length) {
+          console.log(
+            `found new commits in ${repo.name}: ${commits.length} total, ${savedCommits.length} saved`
+          );
+          for (const commit of commits) {
+            await this.extractDataFromCommit(repo, commit);
+          }
         }
 
-        this.saveToFile();
         reposProcessed.push(repo.name);
 
         if (await this.isNearRateLimit()) {
@@ -65,13 +72,12 @@ export class GitHubClient {
           break;
         }
       } catch (error) {
-        this.createLanguageTimeline();
-        this.saveToFile();
         console.error(`Error processing repo ${repo.name}:`, error);
         break;
       }
     }
 
+    this.dedupeAllCommits();
     this.createLanguageTimeline();
     this.saveToFile();
     console.log("repos processed");
@@ -144,7 +150,7 @@ export class GitHubClient {
       {
         owner: repo.owner.login,
         repo: repo.name,
-        per_page: 50,
+        per_page: 15,
       }
     );
 
@@ -175,7 +181,6 @@ export class GitHubClient {
     };
 
     this.allCommits.push(commitDetails);
-    this.dedupeAllCommits();
   }
 
   private createLanguageTimeline() {
@@ -206,7 +211,7 @@ export class GitHubClient {
   }
 
   private dedupeAllCommits() {
-    return Array.from(
+    this.allCommits = Array.from(
       new Map(this.allCommits.map((c) => [c.sha, c])).values()
     ).sort((a, b) => {
       const timeA = a.date ? new Date(a.date).getTime() : 0;
