@@ -126,7 +126,9 @@ export class GitHubClient {
       sort: "updated",
     });
 
-    const filtered = repos.filter((r) => r.owner.login === "badmagick329");
+    const filtered = repos.filter(
+      (r) => r.owner.login === "badmagick329" && r.fork === false
+    );
     this.cachedRepos = filtered;
     return filtered;
   }
