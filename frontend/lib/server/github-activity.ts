@@ -2,16 +2,27 @@ import * as fs from "node:fs";
 import { serverConfig } from "@/lib/server/config";
 import { ActivityData, ActivityDataResponse } from "@/lib/types";
 
+const cachedData = {
+  data: null as ActivityData | null,
+  lastUpdate: null as number | null,
+};
+
 export async function getGitHubActivity(): Promise<ActivityDataResponse> {
   const dataDir = getDataDir();
   if (!dataDir) {
     return { ok: false, error: "DATA_DIR is not set" };
+  }
+  const stat = fs.statSync(`${dataDir}/${serverConfig.activityFile}`);
+  if (stat.mtimeMs === cachedData.lastUpdate && cachedData.data !== null) {
+    console.log("Returning cached data");
+    return { ok: true, data: cachedData.data };
   }
 
   const content = fs
     .readFileSync(`${dataDir}/${serverConfig.activityFile}`)
     .toString();
   const parsed: ActivityData = JSON.parse(content);
+
   parsed.languageTimeline = Object.fromEntries(
     Object.entries(parsed.languageTimeline).map(([month, languages]) => [
       month,
@@ -25,10 +36,14 @@ export async function getGitHubActivity(): Promise<ActivityDataResponse> {
 
   const oldest = new Date();
   oldest.setFullYear(oldest.getFullYear() - 5);
+  const filteredData = filterByDate(parsed, oldest);
 
+  cachedData.data = filteredData;
+  cachedData.lastUpdate = stat.mtimeMs;
+  console.log("Updated Cache");
   return {
     ok: true,
-    data: filterByDate(parsed, oldest),
+    data: filteredData,
   };
 }
 
