@@ -8,32 +8,16 @@ export class GitHubClient {
   private allCommits: Activity[] = [];
   private languageUsageByMonth = new Map<string, Record<string, number>>(); // "2025-11" -> { ts: 15, py: 10 }
   private cacheFile: string;
+  private lastPushFile: string;
+  private lastPushData = {} as Record<string, string | null>;
 
-  constructor(cacheFile: string) {
-    console.log(`Initializing GitHubClient with cache file: ${cacheFile}`);
+  constructor(cacheDir: string) {
     this.octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
     this.cachedRepos = null;
-    this.cacheFile = cacheFile;
-    try {
-      const oldData = JSON.parse(
-        fs.readFileSync(cacheFile).toString()
-      ) as ActivityData;
-
-      if (oldData) {
-        console.log("Found old data");
-        this.allCommits = oldData.activityTimeline;
-        console.log(`${this.allCommits.length} commits`);
-      }
-    } catch {
-      //
-    }
-  }
-
-  get data(): ActivityData {
-    return {
-      activityTimeline: this.allCommits,
-      languageTimeline: Object.fromEntries(this.languageUsageByMonth),
-    };
+    this.cacheFile = `${cacheDir}/activity.json`;
+    this.lastPushFile = `${cacheDir}/lastPushList.json`;
+    console.log(`Initializing GitHubClient with cache file: ${this.cacheFile}`);
+    this.readCache();
   }
 
   async fetchNewData() {
@@ -49,20 +33,17 @@ export class GitHubClient {
 
     for (let i = 0; i < repos.length; i++) {
       const repo = repos[i]!;
-      console.log(`[${i + 1}/${repos.length}] - Processing repo: ${repo.name}`);
+      console.log(`[${i + 1}/${repos.length}] - Checking repo: ${repo.name}`);
+      if (repo.pushed_at === this.lastPushData[repo.name]) {
+        console.log(`No new pushes in ${repo.name}, skipping`);
+        continue;
+      }
+      console.log(`New pushes detected in ${repo.name}, processing`);
 
       try {
         const commits = await this.getCommits(repo, lastFetch);
-        const savedCommits = this.allCommits.filter(
-          (c) => c.repo === repo.name
-        );
-        if (commits.length > savedCommits.length) {
-          console.log(
-            `found new commits in ${repo.name}: ${commits.length} total, ${savedCommits.length} saved`
-          );
-          for (const commit of commits) {
-            await this.extractDataFromCommit(repo, commit);
-          }
+        for (const commit of commits) {
+          await this.extractDataFromCommit(repo, commit);
         }
 
         reposProcessed.push(repo.name);
@@ -77,11 +58,39 @@ export class GitHubClient {
       }
     }
 
+    if (reposProcessed.length === 0) {
+      return;
+    }
+    repos.forEach((r) => (this.lastPushData[r.name] = r.pushed_at));
     this.dedupeAllCommits();
     this.createLanguageTimeline();
-    this.saveToFile();
+    this.saveGitHubData();
+    this.saveLastPushData();
     console.log("repos processed");
     console.log(reposProcessed);
+  }
+
+  private readCache() {
+    try {
+      const oldData = JSON.parse(
+        fs.readFileSync(this.cacheFile).toString()
+      ) as ActivityData;
+
+      if (oldData) {
+        console.log("Found old data");
+        this.allCommits = oldData.activityTimeline;
+        console.log(`${this.allCommits.length} commits`);
+      }
+    } catch {
+      //
+    }
+    try {
+      this.lastPushData = JSON.parse(
+        fs.readFileSync(this.lastPushFile).toString()
+      );
+    } catch {
+      //
+    }
   }
 
   private lastFetch() {
@@ -222,8 +231,17 @@ export class GitHubClient {
     });
   }
 
-  private saveToFile() {
-    fs.writeFileSync(this.cacheFile, JSON.stringify(this.data));
+  private saveGitHubData() {
+    fs.writeFileSync(
+      this.cacheFile,
+      JSON.stringify({
+        activityTimeline: this.allCommits,
+        languageTimeline: Object.fromEntries(this.languageUsageByMonth),
+      })
+    );
+  }
+  private saveLastPushData() {
+    fs.writeFileSync(this.lastPushFile, JSON.stringify(this.lastPushData));
   }
 }
 
