@@ -1,6 +1,7 @@
 import * as fs from "node:fs";
 import { serverConfig } from "@/lib/server/config";
 import { ActivityData, ActivityDataResponse } from "@/lib/types";
+import { timestampLog } from "@/lib/wrappers";
 
 const cachedData = {
   data: null as ActivityData | null,
@@ -14,7 +15,7 @@ export async function getGitHubActivity(): Promise<ActivityDataResponse> {
   }
   const stat = fs.statSync(`${dataDir}/${serverConfig.activityFile}`);
   if (stat.mtimeMs === cachedData.lastUpdate && cachedData.data !== null) {
-    console.log("Returning cached data");
+    timestampLog("Returning cached activity data");
     return { ok: true, data: cachedData.data };
   }
 
@@ -40,7 +41,7 @@ export async function getGitHubActivity(): Promise<ActivityDataResponse> {
 
   cachedData.data = filteredData;
   cachedData.lastUpdate = stat.mtimeMs;
-  console.log("Updated Cache");
+  timestampLog("Updated Cache");
   return {
     ok: true,
     data: filteredData,

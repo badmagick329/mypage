@@ -18,5 +18,5 @@ export const serverConfig = {
     "aoc2023",
     "ink-scrollable-list",
   ],
-  repoListCacheDuration: 10000,
+  repoListCacheDuration: 1000 * 60,
 };

@@ -1,168 +1,99 @@
 import {
   DiskCachedGitHubResponse,
   GitHubRepository,
-  ReposResponse,
   ReposSummary,
 } from "@/lib/types";
 import { serverConfig } from "@/lib/server/config";
 import { Octokit } from "octokit";
-import { Effect, Schedule } from "effect";
+import { Effect, Option } from "effect";
+import * as disk from "@/lib/wrappers/file-io";
+import { parseJson, timestampLog } from "@/lib/wrappers";
 
-export async function getReposSummary(
-  cachedOnly: boolean,
-): Promise<ReposResponse> {
-  const rawDataResult = await getRawData(cachedOnly);
-  if (!rawDataResult.ok) {
-    return { ok: false, error: rawDataResult.error };
-  }
+export const getReposSummary = (cacheOnly: boolean) =>
+  Effect.gen(function* () {
+    const result = yield* getFullData(cacheOnly);
+    return Option.match(result, {
+      onNone: () => Option.none() as Option.Option<ReposSummary>,
+      onSome: (value) => {
+        const data = {} as ReposSummary;
+        value
+          .filter((d) => serverConfig.displayedRepos.includes(d.name))
+          .forEach(
+            (d) =>
+              (data[d.name] = {
+                updatedAt: d.pushed_at,
+              }),
+          );
+        return Option.some(data);
+      },
+    });
+  });
 
-  const data = {} as ReposSummary;
-  rawDataResult.data
-    .filter((d) => serverConfig.displayedRepos.includes(d.name))
-    .forEach(
-      (d) =>
-        (data[d.name] = {
-          updatedAt: d.pushed_at,
-        }),
+const getFullData = (cachedOnly: boolean) => {
+  return Effect.gen(function* () {
+    const content = yield* disk.tryReadDataFile(serverConfig.repoListFile);
+    const parsed = yield* parseJson<DiskCachedGitHubResponse>(content).pipe(
+      Effect.catchTag("ParseError", () => Effect.succeed(null)),
     );
 
-  return { ok: true, data };
-}
-
-async function getRawData(
-  cachedOnly: boolean,
-): Promise<
-  { ok: true; data: GitHubRepository[] } | { ok: false; error: string }
-> {
-  const readExit = await Effect.runPromiseExit(readFileSafe());
-  if (readExit._tag === "Failure") {
-    timestampLog("Failed to read repo cache:", readExit.cause);
-    return { ok: false, error: "Failed to read repository data" };
-  }
-
-  const content = readExit.value;
-
-  const parseExit = await Effect.runPromiseExit(
-    Effect.sync(() => JSON.parse(content) as DiskCachedGitHubResponse),
-  );
-  if (parseExit._tag === "Failure") {
-    timestampLog("Failed to parse repo cache:", parseExit.cause);
-    return { ok: false, error: "Failed to read repository data" };
-  }
-
-  const parsed = parseExit.value;
-  let rawData;
-
-  const getNewData =
-    !cachedOnly &&
-    (!parsed.lastUpdated ||
+    const isCacheStaleOrMissing =
+      !parsed ||
+      !parsed.lastUpdated ||
       Date.now() - new Date(parsed.lastUpdated).getTime() >
-        serverConfig.repoListCacheDuration);
+        serverConfig.repoListCacheDuration;
 
-  if (getNewData) {
-    timestampLog("Cache is stale or missing, updating...");
-    const result = await updateCache();
-
-    if (result?.data) {
-      return {
-        ok: true,
-        data: result.data,
-      };
+    if (!cachedOnly && isCacheStaleOrMissing) {
+      timestampLog("Cache is stale or missing, updating...");
+      const newData = yield* updateCache();
+      if (newData) {
+        return Option.some(newData);
+      }
     }
-  }
+    timestampLog("Returning cached data");
+    if (parsed) {
+      return Option.some(parsed.data);
+    }
 
-  if (!rawData) {
-    return {
-      ok: true,
-      data: parsed.data,
-    };
-  }
-
-  return {
-    ok: false,
-    error: "Failed to read repository data",
-  };
-}
-
-async function updateCache() {
-  const auth = process.env.GITHUB_TOKEN;
-  const octokit = new Octokit({ auth });
-
-  const response = await octokit.request(`GET /user/repos`, {
-    headers: {
-      "X-GitHub-Api-Version": "2022-11-28",
-    },
-    type: "all",
-    per_page: 100,
-    sort: "created",
-  });
-  if (response.status !== 200) {
-    return;
-  }
-  const writeFileEffect = writeFileSafe(JSON.stringify(response));
-
-  const result = await Effect.runPromiseExit(writeFileEffect);
-  if (result._tag === "Failure") {
-    timestampLog("Failed to write updated repo list to cache", result.cause);
-    return;
-  }
-
-  timestampLog("Writing updated repo list to cache");
-
-  return response as { data: GitHubRepository[] };
-}
-
-function getDataDir(): string | undefined {
-  return process.env.DATA_DIR;
-}
-
-const tryReadFile = (filePath: string) =>
-  Effect.tryPromise(() =>
-    import("fs/promises").then((fs) => fs.readFile(filePath, "utf-8")),
+    return Option.none() as Option.Option<GitHubRepository[]>;
+  }).pipe(
+    Effect.catchTag("EnvError", (error) => {
+      timestampLog(`Environment variable ${error.variable} is not set`);
+      return Effect.succeed(Option.none() as Option.Option<GitHubRepository[]>);
+    }),
+    Effect.catchTag("FileIOError", (error) => {
+      timestampLog(`Failed to read/write repository data - ${error.cause}`);
+      return Effect.succeed(Option.none() as Option.Option<GitHubRepository[]>);
+    }),
   );
+};
 
-const tryWriteFile = (filePath: string, content: string) =>
-  Effect.tryPromise(() =>
-    import("fs/promises").then((fs) => fs.writeFile(filePath, content)),
-  );
-
-const readFileWithBackoff = (filePath: string) =>
-  tryReadFile(filePath).pipe(
-    Effect.retry(
-      Schedule.exponential("100 millis").pipe(
-        Schedule.union(Schedule.recurs(10)),
-      ),
-    ),
-  );
-
-const readFileSafe = () =>
+const updateCache = () =>
   Effect.gen(function* () {
-    const dataDir = getDataDir();
-    if (!dataDir) {
-      return yield* Effect.fail(new Error("DATA_DIR is not set"));
+    const auth = process.env.GITHUB_TOKEN;
+    const octokit = new Octokit({ auth });
+
+    const response = yield* Effect.promise(() =>
+      octokit
+        .request(`GET /user/repos`, {
+          headers: {
+            "X-GitHub-Api-Version": "2022-11-28",
+          },
+          type: "public",
+          per_page: 100,
+          sort: "created",
+        })
+        .catch(() => null),
+    );
+    if (!response) {
+      return null;
     }
-    const fileName = `${dataDir}/${serverConfig.repoListFile}`;
-    return yield* readFileWithBackoff(fileName);
+    timestampLog("Writing updated repo list to cache");
+    yield* disk.tryWriteDataFile(
+      serverConfig.repoListFile,
+      JSON.stringify({
+        lastUpdated: new Date().toISOString(),
+        data: response.data,
+      }),
+    );
+    return response.data as GitHubRepository[];
   });
-
-const writeFileWithBackoff = (filePath: string, content: string) =>
-  tryWriteFile(filePath, content).pipe(
-    Effect.retry(
-      Schedule.exponential("100 millis").pipe(
-        Schedule.union(Schedule.recurs(10)),
-      ),
-    ),
-  );
-
-const writeFileSafe = (content: string) =>
-  Effect.gen(function* () {
-    const dataDir = getDataDir();
-    if (!dataDir) {
-      return yield* Effect.fail(new Error("DATA_DIR is not set"));
-    }
-    const fileName = `${dataDir}/${serverConfig.repoListFile}`;
-    return yield* writeFileWithBackoff(fileName, content);
-  });
-
-const timestampLog = (...args: unknown[]) =>
-  console.log(`[${new Date().toISOString()}] - `, ...args);
