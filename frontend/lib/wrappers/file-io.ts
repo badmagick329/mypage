@@ -1,21 +1,65 @@
 import { EnvError, FileIOError } from "@/lib/errors";
+import { parseJson, timestampLog } from "@/lib/wrappers";
 import { Effect, Schedule } from "effect";
 
 const tryReadFile = (filePath: string) =>
-  Effect.tryPromise(() =>
-    import("fs/promises").then((fs) => fs.readFile(filePath, "utf-8")),
-  );
+  Effect.tryPromise({
+    try: () =>
+      import("fs/promises").then((fs) => fs.readFile(filePath, "utf-8")),
+    catch: (error) => new FileIOError({ cause: error }),
+  });
 
 const tryWriteFile = (filePath: string, content: string) =>
   Effect.tryPromise(() =>
     import("fs/promises").then((fs) => fs.writeFile(filePath, content)),
   );
 
+export const tryStatFile = (filePath: string) =>
+  Effect.tryPromise({
+    try: () => import("fs/promises").then((fs) => fs.stat(filePath)),
+    catch: (error) => new FileIOError({ cause: error }),
+  });
+
+export const readDataFileWithInMemoryCache = <T>(
+  filename: string,
+  postProcessData?: (rawData: T) => T,
+) => {
+  const cachedData = {
+    data: null as T | null,
+    lastUpdate: null as number | null,
+  };
+
+  return Effect.gen(function* () {
+    const dataDir = process.env.DATA_DIR;
+    if (!dataDir) {
+      return yield* Effect.fail(new EnvError({ variable: "DATA_DIR" }));
+    }
+    const fullName = `${dataDir}/${filename}`;
+
+    const stat = yield* tryStatFile(fullName);
+    if (stat.mtimeMs === cachedData.lastUpdate && cachedData.data !== null) {
+      timestampLog("Returning in-memory cached");
+      return cachedData.data as T;
+    }
+    const content = yield* tryReadDataFile(filename);
+
+    let parsed = yield* parseJson<T>(content);
+    if (postProcessData) {
+      parsed = postProcessData(parsed);
+    }
+
+    cachedData.data = parsed;
+    cachedData.lastUpdate = stat.mtimeMs;
+    timestampLog("Updated in-memory cache");
+    return parsed as T;
+  });
+};
+
 const readFileWithBackoff = (filePath: string) =>
-  tryReadFile(filePath).pipe(
+  Effect.suspend(() => tryReadFile(filePath)).pipe(
     Effect.retryOrElse(
-      Schedule.exponential("100 millis").pipe(
-        Schedule.union(Schedule.recurs(4)),
+      Schedule.exponential("50 millis").pipe(
+        Schedule.intersect(Schedule.recurs(4)),
       ),
       (error) => Effect.fail(new FileIOError({ cause: error })),
     ),
