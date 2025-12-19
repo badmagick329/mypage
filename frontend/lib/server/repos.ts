@@ -7,7 +7,12 @@ import { serverConfig } from "@/lib/server/config";
 import { Octokit } from "octokit";
 import { Effect, Option } from "effect";
 import * as disk from "@/lib/wrappers/file-io";
-import { parseJson, timestampLog } from "@/lib/wrappers";
+import { timestampLog } from "@/lib/wrappers";
+
+const cachedData = {
+  data: null as DiskCachedGitHubResponse | null,
+  lastUpdate: null as number | null,
+};
 
 export const getReposSummary = (cacheOnly: boolean) =>
   Effect.gen(function* () {
@@ -31,30 +36,50 @@ export const getReposSummary = (cacheOnly: boolean) =>
 
 const getFullData = (cachedOnly: boolean) =>
   Effect.gen(function* () {
-    const content = yield* disk.tryReadDataFile(serverConfig.repoListFile);
-    const parsed = yield* parseJson<DiskCachedGitHubResponse>(content).pipe(
-      Effect.catchTag("ParseError", () => Effect.succeed(null)),
-    );
+    const parsed = yield* disk
+      .loadFileWithInMemoryCache(serverConfig.repoListFile, cachedData)
+      .pipe(
+        Effect.map((d) => Option.some(d)),
+        Effect.catchTag("ParseError", () => Option.none()),
+      );
 
-    const isCacheStaleOrMissing =
-      !parsed ||
-      !parsed.lastUpdated ||
-      Date.now() - new Date(parsed.lastUpdated).getTime() >
-        serverConfig.repoListCacheDuration;
+    return yield* Option.match(parsed, {
+      onNone: () => {
+        return Effect.gen(function* () {
+          if (!cachedData) {
+            timestampLog("Cache is stale or missing, updating...");
+            const newData = yield* updateCache();
+            if (newData) {
+              return Option.some(newData);
+            }
+          }
 
-    if (!cachedOnly && isCacheStaleOrMissing) {
-      timestampLog("Cache is stale or missing, updating...");
-      const newData = yield* updateCache();
-      if (newData) {
-        return Option.some(newData);
-      }
-    }
-    timestampLog("Returning cached data");
-    if (parsed) {
-      return Option.some(parsed.data);
-    }
+          return Option.none() as Option.Option<GitHubRepository[]>;
+        });
+      },
+      onSome: (value) => {
+        return Effect.gen(function* () {
+          const isCacheStaleOrMissing =
+            !value.lastUpdated ||
+            Date.now() - new Date(value.lastUpdated).getTime() >
+              serverConfig.repoListCacheDuration;
 
-    return Option.none() as Option.Option<GitHubRepository[]>;
+          if (!cachedOnly && isCacheStaleOrMissing) {
+            timestampLog("Cache is stale or missing, updating...");
+            const newData = yield* updateCache();
+            if (newData) {
+              return Option.some(newData);
+            }
+          }
+          timestampLog("Returning cached data");
+          if (parsed) {
+            return Option.some(value.data);
+          }
+
+          return Option.none() as Option.Option<GitHubRepository[]>;
+        });
+      },
+    });
   }).pipe(
     Effect.catchTags({
       EnvError: (error) => {
