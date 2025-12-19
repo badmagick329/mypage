@@ -165,3 +165,7 @@ export type ActivityData = {
 
 export type ReposResponse = APIResponse<ReposSummary>;
 export type ActivityDataResponse = APIResponse<ActivityData>;
+export type CachedData<T> = {
+  data: T | null;
+  lastUpdate: number | null;
+};

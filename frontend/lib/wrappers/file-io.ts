@@ -1,4 +1,5 @@
 import { EnvError, FileIOError } from "@/lib/errors";
+import { CachedData } from "@/lib/types";
 import { parseJson, timestampLog } from "@/lib/wrappers";
 import { Effect, Schedule } from "effect";
 
@@ -20,17 +21,13 @@ export const tryStatFile = (filePath: string) =>
     catch: (error) => new FileIOError({ cause: error }),
   });
 
-export const readDataFileWithInMemoryCache = <T>(
+export const loadFileWithInMemoryCache = <T>(
   filename: string,
+  cachedData: CachedData<T>,
   postProcessData?: (rawData: T) => T,
-) => {
-  const cachedData = {
-    data: null as T | null,
-    lastUpdate: null as number | null,
-  };
-
-  return Effect.gen(function* () {
-    const dataDir = process.env.DATA_DIR;
+) =>
+  Effect.gen(function* () {
+    const dataDir = getDataDir();
     if (!dataDir) {
       return yield* Effect.fail(new EnvError({ variable: "DATA_DIR" }));
     }
@@ -53,7 +50,6 @@ export const readDataFileWithInMemoryCache = <T>(
     timestampLog("Updated in-memory cache");
     return parsed as T;
   });
-};
 
 const readFileWithBackoff = (filePath: string) =>
   Effect.suspend(() => tryReadFile(filePath)).pipe(

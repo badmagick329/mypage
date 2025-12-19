@@ -1,11 +1,17 @@
 import { serverConfig } from "@/lib/server/config";
 import { ActivityData, LanguageTimeline } from "@/lib/types";
 import { Effect, Option } from "effect";
-import { readDataFileWithInMemoryCache } from "@/lib/wrappers/file-io";
+import { loadFileWithInMemoryCache } from "@/lib/wrappers/file-io";
+
+const cachedData = {
+  data: null as ActivityData | null,
+  lastUpdate: null as number | null,
+};
 
 export const getGitHubActivity = Effect.gen(function* () {
-  const result = yield* readDataFileWithInMemoryCache(
+  const result = yield* loadFileWithInMemoryCache(
     serverConfig.activityFile,
+    cachedData,
     postProcessData,
   );
   return Option.some(result) as Option.Option<ActivityData>;
