@@ -29,8 +29,8 @@ export const getReposSummary = (cacheOnly: boolean) =>
     });
   });
 
-const getFullData = (cachedOnly: boolean) => {
-  return Effect.gen(function* () {
+const getFullData = (cachedOnly: boolean) =>
+  Effect.gen(function* () {
     const content = yield* disk.tryReadDataFile(serverConfig.repoListFile);
     const parsed = yield* parseJson<DiskCachedGitHubResponse>(content).pipe(
       Effect.catchTag("ParseError", () => Effect.succeed(null)),
@@ -56,16 +56,21 @@ const getFullData = (cachedOnly: boolean) => {
 
     return Option.none() as Option.Option<GitHubRepository[]>;
   }).pipe(
-    Effect.catchTag("EnvError", (error) => {
-      timestampLog(`Environment variable ${error.variable} is not set`);
-      return Effect.succeed(Option.none() as Option.Option<GitHubRepository[]>);
-    }),
-    Effect.catchTag("FileIOError", (error) => {
-      timestampLog(`Failed to read/write repository data - ${error.cause}`);
-      return Effect.succeed(Option.none() as Option.Option<GitHubRepository[]>);
+    Effect.catchTags({
+      EnvError: (error) => {
+        timestampLog(`Environment variable ${error.variable} is not set`);
+        return Effect.succeed(
+          Option.none() as Option.Option<GitHubRepository[]>,
+        );
+      },
+      FileIOError: (error) => {
+        timestampLog(`Failed to read/write repository data - ${error.cause}`);
+        return Effect.succeed(
+          Option.none() as Option.Option<GitHubRepository[]>,
+        );
+      },
     }),
   );
-};
 
 const updateCache = () =>
   Effect.gen(function* () {
